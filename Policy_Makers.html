@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Driven Ocean Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes slideInFromRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes redPulse {
+            0% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.4); }
+            100% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.4); }
+        }
+
+        @keyframes textRise {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes cardIconHover {
+            from { transform: translateY(0); }
+            to { transform: translateY(-5px); }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #e2e8f0;
+            animation: fadeIn 2.5s ease-in-out;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            background-color: rgba(26, 32, 44, 0.7);
+            border: 1px solid rgba(45, 55, 72, 0.7);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            animation: pulse 3s infinite;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+            animation: none;
+        }
+
+        /* New animation for card icons on hover */
+        .card:hover .card-icon {
+            animation: cardIconHover 0.3s forwards;
+        }
+        
+        #alerts-section, #investment-section, #scorecards-section {
+            animation: slideInFromRight 0.5s ease-out forwards;
+        }
+        
+        .tsunami-alert {
+            animation: redPulse 2s infinite;
+        }
+
+        /* New animation for heading text */
+        .animated-text {
+            animation: textRise 1s ease-out;
+        }
+        
+    </style>
+</head>
+<body>
+<a href="#" class="absolute top-4 right-4 flex items-center space-x-2 bg-white/10 p-2 rounded-lg backdrop-blur-sm hover:bg-white/20 transition-colors duration-200">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            <span class="text-white text-md font-medium">Mr.Charan Kumar    </span>
+        </a>
+
+    <!-- Main Policymakers Dashboard -->
+    <div id="main-dashboard" class="container min-h-screen flex flex-col items-center justify-center text-center">
+        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-white animated-text">Policymakers' Dashboard</h1>
+        <p class="text-lg text-slate-200 mb-8 sm:mb-12 max-w-2xl mx-auto animated-text">Access key insights to make informed decisions for ocean and fisheries management. Navigate between real-time alerts, economic forecasts, and environmental health scorecards.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full max-w-4xl">
+            <div id="alerts-card" class="card p-6 rounded-xl flex flex-col items-center shadow-lg hover:shadow-xl">
+                <div class="bg-blue-600 p-4 rounded-full mb-4 card-icon">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.398 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-semibold text-red-500 mb-2">Alerts for Risks</h3>
+
+                <p class="text-slate-200 text-sm">Monitor real-time threats like tsunamis and unsafe fishing conditions.</p>
+            </div>
+            <div id="investment-card" class="card p-6 rounded-xl flex flex-col items-center shadow-lg hover:shadow-xl">
+                <div class="bg-green-600 p-4 rounded-full mb-4 card-icon">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-semibold text-white mb-2">Seasonal Investments</h3>
+                <p class="text-slate-200 text-sm">Get data-driven suggestions for strategic fisheries investments.</p>
+            </div>
+            <div id="scorecards-card" class="card p-6 rounded-xl flex flex-col items-center shadow-lg hover:shadow-xl">
+                <div class="bg-indigo-600 p-4 rounded-full mb-4 card-icon">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M17 16h.01"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-semibold text-white mb-2">Water Body Scorecards</h3>
+                <p class="text-slate-200 text-sm">View and track the health and quality of key water bodies.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alerts Section (Initially Hidden) -->
+    <div id="alerts-section" class="container min-h-screen flex-col items-center text-center hidden">
+        <div class="w-full flex justify-between items-center mb-8">
+            <button id="alerts-back-btn" class="text-sm px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-300 transition-all duration-300 transform hover:scale-105">← Back to Dashboard</button>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight animated-text">Alerts for Risks</h2>
+            <div></div> <!-- Placeholder for layout -->
+        </div>
+        <div class="w-full max-w-4xl">
+            <p class="text-slate-200 mb-6 animated-text">Here you can find real-time alerts for tsunamis and unsafe fishing conditions to ensure public and professional safety.</p>
+            <div class="grid grid-cols-1 gap-6">
+                <!-- Tsunami Alert Card -->
+                <div class="card p-6 rounded-xl shadow-lg bg-red-800 border-red-900 tsunami-alert">
+                    <div class="flex items-center mb-2">
+                        <svg class="w-8 h-8 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <h3 class="text-xl font-semibold text-white">TSUNAMI WARNING ISSUED</h3>
+                    </div>
+                    <p class="text-sm text-red-200">A destructive tsunami is expected in the designated coastal area. **Immediate evacuation is required.**</p>
+                    <p class="text-sm text-red-200 mt-2">**Affected Zone:** Southeast Coastal Region</p>
+                    <p class="text-sm text-red-200 mt-2">**Expected Arrival:** 12:45 PM IST (in 23 minutes)</p>
+                </div>
+                <!-- Fishing Risk Alert Card -->
+                <div class="card p-6 rounded-xl shadow-lg bg-yellow-800 border-yellow-900">
+                    <div class="flex items-center mb-2">
+                        <svg class="w-8 h-8 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.398 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <h3 class="text-xl font-semibold text-white">Unsafe Fishing Conditions</h3>
+                    </div>
+                    <p class="text-sm text-yellow-200">Severe currents and a harmful algal bloom have been detected in the Bay of Bengal. All small to medium-sized vessels are advised to remain in port.</p>
+                    <p class="text-sm text-yellow-200 mt-2">**Affected Zone:** Northeast Bay of Bengal, 15-25 nautical miles offshore</p>
+                    <p class="text-sm text-yellow-200 mt-2">**Risk Level:** High</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seasonal Investments Section (Initially Hidden) -->
+    <div id="investment-section" class="container min-h-screen flex-col items-center text-center hidden">
+        <div class="w-full flex justify-between items-center mb-8">
+            <button id="investment-back-btn" class="text-sm px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-300 transition-all duration-300 transform hover:scale-105">← Back to Dashboard</button>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight animated-text">Seasonal Investment Suggestions</h2>
+            <div></div>
+        </div>
+        <div class="w-full max-w-4xl">
+            <p class="text-slate-200 mb-6 animated-text">Explore strategic, data-driven investment suggestions based on seasonal oceanic and market trends. Recommendations are designed to maximize yield and sustainability.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Aquaculture Investment Card -->
+                <div class="card p-6 rounded-xl shadow-lg bg-[#003b49] border border-cyan-400 hover:scale-105 transition duration-300">
+    <h3 class="text-xl font-bold text-cyan-200 mb-2">🦐 Shrimp Aquaculture Growth</h3>
+    <p class="text-sm text-slate-100 mb-1">
+        <span class="font-semibold text-cyan-300">📅 Forecast:</span> High Yield (Q4-2025)
+    </p>
+    <p class="text-sm text-slate-200">
+        <span class="font-semibold text-cyan-300">📊 Rationale:</span> Data indicates a strong correlation between a projected increase in phytoplankton concentration and optimal feeding conditions for shrimp species. A 20% increase in production is forecasted.
+    </p>
+</div>
+                <!-- Sustainable Fishing Equipment Card -->
+                <!-- NEW SAMPLE for India -->
+                <div class="card p-6 rounded-xl shadow-lg bg-[#2c3e50] border border-yellow-400 hover:scale-105 transition duration-300">
+    <h3 class="text-xl font-bold text-yellow-200 mb-2">👥 Sustainable Fishing Co-ops</h3>
+    <p class="text-sm text-slate-100 mb-1">
+        <span class="font-semibold text-yellow-300">📅 Forecast:</span> Stable Long-Term Growth (2026-2028)
+    </p>
+    <p class="text-sm text-slate-200">
+        <span class="font-semibold text-yellow-300">📊 Rationale:</span> Empowering local fisher communities with shared resources and data-driven guidance can significantly reduce overfishing. Estimated 15% boost in catch quality around the Kerala coastline.
+    </p>
+</div>
+                <!-- ☔ Monsoon Card -->
+                <div class="card p-6 rounded-xl shadow-lg bg-[#002e3c] border border-blue-400">
+                    <h3 class="text-xl font-bold text-blue-200 mb-2">☔ Monsoon (June–Sept): Protection & Patrolling</h3>
+                    <p class="text-sm text-slate-100 mb-2"><span class="font-semibold text-blue-300">Suggested Focus:</span> Ban enforcement, patrols, habitat protection</p>
+                    <ul class="list-disc list-inside text-slate-200 text-sm mb-2">
+                     <li>🚫 Enforce seasonal fishing bans in spawning areas</li>
+                     <li>🛟 Restore mangroves and estuary buffers</li>
+                    <li>📢 Launch public awareness drives near coastal villages</li>
+                     <li>📈 Use AI to detect illegal movement during night</li>
+                     </ul>
+                     <p class="text-xs text-slate-400 italic mt-2">“Protect today, harvest tomorrow.”</p>
+                </div>
+                <div class="card p-6 rounded-xl shadow-lg bg-[#003344] border border-green-400 hover:scale-105 transition duration-300">
+    <h3 class="text-xl font-bold text-green-200 mb-2">🎣 Sustainable Fishing Gear</h3>
+    <p class="text-sm text-slate-100 mb-1">
+        <span class="font-semibold text-green-300">📅 Forecast:</span> High ROI (Q1-2026)
+    </p>
+    <p class="text-sm text-slate-200">
+        <span class="font-semibold text-green-300">📊 Rationale:</span> A recent policy change promotes sustainable practices. Investing in upgraded, selective fishing gear will not only improve yields by targeting specific species but also reduce bycatch, potentially leading to new market access.
+    </p>
+</div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Water Body Scorecards Section (Initially Hidden) -->
+    <div id="scorecards-section" class="container min-h-screen flex-col items-center text-center hidden">
+        <div class="w-full flex justify-between items-center mb-8">
+            <button id="scorecards-back-btn" class="text-sm px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-300 transition-all duration-300 transform hover:scale-105">← Back to Dashboard</button>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight animated-text">Water Body Scorecards</h2>
+            <div></div>
+        </div>
+        <div class="w-full max-w-4xl">
+            <p class="text-slate-200 mb-6 animated-text">Access real-time health scorecards for key water bodies, helping you identify at-risk regions and monitor the impact of conservation efforts.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Lake Victoria Scorecard -->
+                <div class="card p-6 rounded-xl shadow-lg bg-[#003b49] border border-cyan-400 hover:scale-105 transition duration-300">
+    <h4 class="text-lg font-bold text-cyan-200 mb-1">🐦 Chilika Lake</h4>
+    <p class="text-sm text-slate-300 mb-4">Odisha, India</p>
+    <div class="bg-cyan-600 text-white font-bold text-5xl py-4 rounded-lg mb-4 shadow-md">B+</div>
+    <div class="text-left text-sm text-slate-100">
+        <p class="mb-1"><span class="font-bold text-cyan-300">💧 Water Quality:</span> <span class="text-green-400">Good</span></p>
+        <p class="mb-1"><span class="font-bold text-cyan-300">🌱 Biodiversity:</span> <span class="text-yellow-400">Fair</span></p>
+        <p class="mb-1"><span class="font-bold text-cyan-300">🏝️ Habitat Integrity:</span> <span class="text-green-400">Good</span></p>
+    </div>
+</div>
+                <div class="card p-6 rounded-xl shadow-lg bg-[#003044] border border-blue-400 hover:scale-105 transition duration-300">
+    <h4 class="text-lg font-bold text-blue-200 mb-1">🦩 Loktak Lake</h4>
+    <p class="text-sm text-slate-300 mb-4">Manipur, India</p>
+    <div class="bg-blue-600 text-white font-bold text-5xl py-4 rounded-lg mb-4 shadow-md">B</div>
+    <div class="text-left text-sm text-slate-100">
+        <p class="mb-1"><span class="font-bold text-blue-300">💧 Water Quality:</span> <span class="text-yellow-400">Moderate</span></p>
+        <p class="mb-1"><span class="font-bold text-blue-300">🌿 Biodiversity:</span> <span class="text-green-400">Good</span></p>
+        <p class="mb-1"><span class="font-bold text-blue-300">🏞️ Habitat Integrity:</span> <span class="text-yellow-400">Fair</span></p>
+    </div>
+</div>
+                <!-- Amazon River Delta Scorecard -->
+                <div class="card p-6 rounded-xl shadow-lg bg-[#002c3e] border border-teal-400 hover:scale-105 transition duration-300">
+    <h4 class="text-lg font-bold text-teal-200 mb-1">🐊 Vembanad Lake</h4>
+    <p class="text-sm text-slate-300 mb-4">Kerala, India</p>
+    <div class="bg-teal-600 text-white font-bold text-5xl py-4 rounded-lg mb-4 shadow-md">C+</div>
+    <div class="text-left text-sm text-slate-100">
+        <p class="mb-1"><span class="font-bold text-teal-300">💧 Water Quality:</span> <span class="text-red-400">Poor</span></p>
+        <p class="mb-1"><span class="font-bold text-teal-300">🐟 Biodiversity:</span> <span class="text-yellow-400">Fair</span></p>
+        <p class="mb-1"><span class="font-bold text-teal-300">🌾 Habitat Integrity:</span> <span class="text-yellow-400">Fair</span></p>
+    </div>
+</div>
+<!-- 🧂 Sambhar Lake Scorecard -->
+<div class="card p-6 rounded-xl shadow-lg bg-[#003544] border border-indigo-400 hover:scale-105 transition duration-300">
+    <h4 class="text-lg font-bold text-indigo-200 mb-1">🧂 Sambhar Lake</h4>
+    <p class="text-sm text-slate-300 mb-4">Rajasthan, India</p>
+    <div class="bg-indigo-600 text-white font-bold text-5xl py-4 rounded-lg mb-4 shadow-md">C</div>
+    <div class="text-left text-sm text-slate-100">
+        <p class="mb-1"><span class="font-bold text-indigo-300">💧 Water Quality:</span> <span class="text-yellow-400">Moderate</span></p>
+        <p class="mb-1"><span class="font-bold text-indigo-300">🧬 Biodiversity:</span> <span class="text-red-400">Low</span></p>
+        <p class="mb-1"><span class="font-bold text-indigo-300">🏜️ Habitat Integrity:</span> <span class="text-yellow-400">Fair</span></p>
+    </div>
+</div>
+<!-- 🐥 Wular Lake Scorecard -->
+<div class="card p-6 rounded-xl shadow-lg bg-[#002f3f] border border-blue-400 hover:scale-105 transition duration-300">
+    <h4 class="text-lg font-bold text-blue-200 mb-1">🐥 Wular Lake</h4>
+    <p class="text-sm text-slate-300 mb-4">Jammu & Kashmir, India</p>
+    <div class="bg-blue-700 text-white font-bold text-5xl py-4 rounded-lg mb-4 shadow-md">B</div>
+    <div class="text-left text-sm text-slate-100">
+        <p class="mb-1"><span class="font-bold text-blue-300">💧 Water Quality:</span> <span class="text-green-400">Good</span></p>
+        <p class="mb-1"><span class="font-bold text-blue-300">🦠 Biodiversity:</span> <span class="text-green-400">Rich</span></p>
+        <p class="mb-1"><span class="font-bold text-blue-300">🌊 Habitat Integrity:</span> <span class="text-yellow-400">Fair</span></p>
+    </div>
+</div>
+<!-- 🦢 Kolleru Lake Scorecard -->
+<div class="card p-6 rounded-xl shadow-lg bg-[#002d3a] border border-cyan-400 hover:scale-105 transition duration-300">
+    <h4 class="text-lg font-bold text-cyan-200 mb-1">🦢 Kolleru Lake</h4>
+    <p class="text-sm text-slate-300 mb-4">Andhra Pradesh, India</p>
+    <div class="bg-cyan-700 text-white font-bold text-5xl py-4 rounded-lg mb-4 shadow-md">B+</div>
+    <div class="text-left text-sm text-slate-100">
+        <p class="mb-1"><span class="font-bold text-cyan-300">💧 Water Quality:</span> <span class="text-green-400">Good</span></p>
+        <p class="mb-1"><span class="font-bold text-cyan-300">🦠 Biodiversity:</span> <span class="text-yellow-400">Moderate</span></p>
+        <p class="mb-1"><span class="font-bold text-cyan-300">🪸 Habitat Integrity:</span> <span class="text-yellow-400">Fair</span></p>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dashboard = document.getElementById('main-dashboard');
+            const alertsSection = document.getElementById('alerts-section');
+            const investmentSection = document.getElementById('investment-section');
+            const scorecardsSection = document.getElementById('scorecards-section');
+
+            const alertsCard = document.getElementById('alerts-card');
+            const investmentCard = document.getElementById('investment-card');
+            const scorecardsCard = document.getElementById('scorecards-card');
+
+            const alertsBackBtn = document.getElementById('alerts-back-btn');
+            const investmentBackBtn = document.getElementById('investment-back-btn');
+            const scorecardsBackBtn = document.getElementById('scorecards-back-btn');
+
+            function showDashboard() {
+                dashboard.classList.remove('hidden');
+                alertsSection.classList.add('hidden');
+                investmentSection.classList.add('hidden');
+                scorecardsSection.classList.add('hidden');
+            }
+
+            function showSection(section) {
+                dashboard.classList.add('hidden');
+                section.classList.remove('hidden');
+                section.classList.add('flex');
+            }
+
+            alertsCard.addEventListener('click', () => showSection(alertsSection));
+            investmentCard.addEventListener('click', () => showSection(investmentSection));
+            scorecardsCard.addEventListener('click', () => showSection(scorecardsSection));
+
+            alertsBackBtn.addEventListener('click', showDashboard);
+            investmentBackBtn.addEventListener('click', showDashboard);
+            scorecardsBackBtn.addEventListener('click', showDashboard);
+
+            showDashboard();
+        });
+    </script>
+</body>
+</html>

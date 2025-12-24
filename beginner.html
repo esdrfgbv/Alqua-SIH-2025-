@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean's Bounty: Fisheries Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Deep blue ocean theme styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to top, #001f3f, #003366, #005f8d, #008fba);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Title animation */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            animation: wave-text 3s ease-in-out infinite;
+        }
+
+        @keyframes wave-text {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Glassmorphism card style */
+        .data-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fade-in-up 0.5s ease-out forwards;
+        }
+
+        .data-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes fade-in-up {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .status-declining {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        
+        .status-healthy {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        /* Modal styles */
+        .modal {
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: linear-gradient(to bottom, #003366, #001f3f);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        /* Bubble animations */
+        .bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: rise 10s infinite ease-in;
+        }
+        .bubble:nth-child(1) { left: 10%; animation-duration: 8s; }
+        .bubble:nth-child(2) { left: 20%; animation-duration: 5s; animation-delay: 1s; width: 20px; height: 20px; }
+        .bubble:nth-child(3) { left: 25%; animation-duration: 7s; animation-delay: 2s; }
+        .bubble:nth-child(4) { left: 40%; animation-duration: 11s; animation-delay: 0s; width: 30px; height: 30px; }
+        .bubble:nth-child(5) { left: 55%; animation-duration: 6s; animation-delay: 1s; }
+        .bubble:nth-child(6) { left: 70%; animation-duration: 9s; animation-delay: 0s; width: 25px; height: 25px; }
+        .bubble:nth-child(7) { left: 85%; animation-duration: 12s; animation-delay: 2s; }
+
+        @keyframes rise {
+            0% { bottom: -100px; transform: translateX(0); }
+            50% { transform: translateX(100px); }
+            100% { bottom: 100%; transform: translateX(-200px); }
+        }
+    </style>
+</head>
+<body class="text-white p-4 md:p-8">
+
+    <div class="bubbles">
+        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+    </div>
+
+    <div class="container mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold text-center mb-10">Ocean's Bounty: Fisheries Report</h1>
+
+        <div id="data-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Data cards will be injected here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Modal for Detailed View -->
+    <div id="details-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="modal-content w-full max-w-lg rounded-2xl p-6 text-white shadow-lg">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="modal-title" class="text-2xl font-bold font-['Playfair_Display']"></h2>
+                <button id="close-modal" class="text-2xl font-bold text-gray-300 hover:text-white">&times;</button>
+            </div>
+            <div id="modal-body" class="space-y-3">
+                <!-- Modal content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fishData = [
+                { location: 'Visakhapatnam', fish: 'Indian Mackerel', quantity: 120, size: 80, netType: 'Trawl Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Indian mackerel (Rastrelliger kanagurta)', 'Tuna (Thunnus albacares)'] },
+                { location: 'Visakhapatnam', fish: 'Bombay Duck', quantity: 80, size: 120, netType: 'Trawl Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Tuna (Thunnus albacares)'] },
+                { location: 'Kochi', fish: 'Sardine', quantity: 150, size: 60, netType: 'Purse Seine', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Pearl spot/Karimeen (Etroplus suratensis)'] },
+                { location: 'Kochi', fish: 'Ribbon Fish', quantity: 200, size: 60, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Indian oil sardine (Sardinella longiceps)'] },
+                { location: 'Bay of Bengal', fish: 'Catla', quantity: 200, size: null, netType: 'Cast Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Hilsa shad (Tenualosa ilisha)'] },
+                { location: 'Bay of Bengal', fish: 'Rohu', quantity: 180, size: null, netType: 'Gill Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Indian anchovy (Stolephorus indicus)'] },
+                { location: 'Bay of Bengal', fish: 'Hilsa', quantity: 220, size: null, netType: 'Drift Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Silver pomfret (Pampus argenteus)'] },
+                { location: 'Arabian Sea', fish: 'Pomfret', quantity: 140, size: null, netType: 'Hook and Line', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Indian oil sardine (Sardinella longiceps)'] },
+                { location: 'Arabian Sea', fish: 'Kingfish', quantity: 100, size: null, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Yellowfin tuna (Thunnus albacares)'] },
+                { location: 'Arabian Sea', fish: 'Tuna', quantity: 250, size: null, netType: 'Long Line', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Mahi-mahi/Dolphin fish (Coryphaena hippurus)'] },
+                { location: 'Indian Ocean', fish: 'Red Snapper', quantity: 160, size: null, netType: 'Trawl Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Skipjack tuna (Katsuwonus pelamis)'] },
+                { location: 'Indian Ocean', fish: 'Grouper', quantity: 120, size: null, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Bigeye tuna (Thunnus obesus)'] },
+                { location: 'Laccadive Sea', fish: 'Mahi Mahi', quantity: 200, size: null, netType: 'Long Line', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Reef grouper (Epinephelus spp.)'] },
+                { location: 'Laccadive Sea', fish: 'Barracuda', quantity: 90, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Parrotfish (Scarus spp.)'] },
+                { location: 'Laccadive Sea', fish: 'Emperor Fish', quantity: 130, size: null, netType: 'Gill Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Butterflyfish (Chaetodon spp.)'] },
+                { location: 'Raichak Lake', fish: 'Tilapia', quantity: 70, size: null, netType: 'Cast Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Catla (Catla catla)'] },
+                { location: 'Raichak Lake', fish: 'Catfish', quantity: 50, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Rohu (Labeo rohita)'] },
+                { location: 'Mangalore Lake', fish: 'Carp', quantity: 80, size: null, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Common carp (Cyprinus carpio)'] },
+                { location: 'Mangalore Lake', fish: 'Snakehead', quantity: 60, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Tilapia (Oreochromis mossambicus)'] },
+                { location: 'Mangalore Lake', fish: 'Tilapia', quantity: 90, size: null, netType: 'Cast Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Catla (Catla catla)'] },
+                { location: 'Andaman Sea', fish: 'Mahi Mahi', quantity: 180, size: null, netType: 'Long Line', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Snapper (Lutjanus argentimaculatus)'] },
+                { location: 'Andaman Sea', fish: 'Tuna', quantity: 220, size: null, netType: 'Drift Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Coral trout (Plectropomus leopardus)'] },
+                { location: 'Andaman Sea', fish: 'Pomfret', quantity: 140, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Trevally (Caranx ignobilis)'] },
+                { location: 'Gulf of Kutch', fish: 'Indian Mackerel', quantity: 130, size: null, netType: 'Gill Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Mudskipper (Periophthalmus spp.)'] },
+                { location: 'Gulf of Kutch', fish: 'Ribbon Fish', quantity: 90, size: null, netType: 'Purse Seine', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Bombay duck (Harpadon nehereus)'] },
+                { location: 'Gulf of Kutch', fish: 'Bombay Duck', quantity: 70, size: null, netType: 'Trawl Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Milkfish (Chanos chanos)'] },
+                { location: 'Gulf of Khambt', fish: 'Catla', quantity: 200, size: null, netType: 'Cast Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Bombay duck (Harpadon nehereus)'] },
+                { location: 'Gulf of Khambt', fish: 'Rohu', quantity: 180, size: null, netType: 'Gill Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Indian prawn (Fenneropenaeus indicus)'] },
+                { location: 'Gulf of Mannar', fish: 'Kingfish', quantity: 100, size: null, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Parrotfish (Scarus ghobban)'] },
+                { location: 'Gulf of Mannar', fish: 'Tuna', quantity: 250, size: null, netType: 'Long Line', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Sea cucumber (Holothuria spp.)'] },
+                { location: 'Gulf of Mannar', fish: 'Pomfret', quantity: 140, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Reef grouper (Epinephelus spp.)'] },
+                { location: 'Palk Strait', fish: 'Sardine', quantity: 150, size: null, netType: 'Purse Seine', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Silver pomfret (Pampus argenteus)'] },
+                { location: 'Palk Strait', fish: 'Indian Anchovy', quantity: 90, size: null, netType: 'Beach Seine', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Sea bass (Lates calcarifer)'] },
+                { location: 'Strait of Malacca', fish: 'Red Snapper', quantity: 160, size: null, netType: 'Trawl Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Barramundi (Lates calcarifer)'] },
+                { location: 'Strait of Malacca', fish: 'Grouper', quantity: 120, size: null, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Indian threadfin (Polynemus indicus)'] },
+                { location: 'Wular Lake', fish: 'Tilapia', quantity: 70, size: null, netType: 'Cast Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Snow trout (Schizothorax spp.)'] },
+                { location: 'Wular Lake', fish: 'Catfish', quantity: 50, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Common carp (Cyprinus carpio)'] },
+                { location: 'Dal Lake', fish: 'Carp', quantity: 80, size: null, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Schizothorax niger (Kashmir snow trout)'] },
+                { location: 'Dal Lake', fish: 'Snakehead', quantity: 60, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Common carp (Cyprinus carpio)'] },
+            ];
+
+            const grid = document.getElementById('data-grid');
+            const modal = document.getElementById('details-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const closeModalBtn = document.getElementById('close-modal');
+
+            fishData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'data-card p-5 rounded-lg cursor-pointer flex flex-col justify-between';
+                card.style.animationDelay = `${index * 100}ms`;
+
+                const statusClass = item.Status.toLowerCase() === 'declining' ? 'status-declining' : 'status-healthy';
+
+                card.innerHTML = `
+                    <div>
+                        <h3 class="text-xl font-bold text-cyan-300">${item.fish}</h3>
+                        <p class="text-sm text-gray-300">${item.location}</p>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-lg">${item.quantity} units</p>
+                        <p class="text-sm text-gray-400">Net: ${item.netType}</p>
+                    </div>
+                    <div class="mt-4 text-right">
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full ${statusClass}">
+                            ${item.Status}
+                        </span>
+                    </div>
+                `;
+
+                card.addEventListener('click', () => showDetails(item));
+                grid.appendChild(card);
+            });
+            
+            function showDetails(item) {
+                modalTitle.textContent = `${item.fish} Details`;
+                modalBody.innerHTML = `
+                    <p><strong>Location:</strong> ${item.location}</p>
+                    <p><strong>Quantity Caught:</strong> ${item.quantity} units</p>
+                    <p><strong>Average Size:</strong> ${item.size ? item.size : 'N/A'}</p>
+                    <p><strong>Net Type Used:</strong> ${item.netType}</p>
+                    <p><strong>Stock Status:</strong> <span class="font-bold ${item.Status.toLowerCase() === 'declining' ? 'text-red-400' : 'text-green-400'}">${item.Status}</span></p>
+                    <p><strong>Fish Stock Health:</strong> ${item.healthStatus}</p>
+                    <div>
+                        <p><strong>Suggested Alternatives:</strong></p>
+                        <ul class="list-disc list-inside pl-4 text-cyan-300">
+                            ${item.alternatives.map(alt => `<li>${alt}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                modal.classList.add('active');
+            }
+
+            function closeModal() {
+                modal.classList.remove('active');
+            }
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+

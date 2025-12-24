@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marine Research Dashboard</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* --- Base Styles & Theme --- */
+        :root {
+            --primary-bg: #0a192f;
+            --secondary-bg: #001e3c;
+            --accent-color: #64ffda;
+            --text-primary: #ccd6f6;
+            --text-secondary: #8892b0;
+            --border-color: rgba(100, 255, 218, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* --- Pop-up Modal Animation --- */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--secondary-bg);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: scale(0.7);
+            transition: transform 0.4s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h2 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-button:hover {
+            color: var(--accent-color);
+        }
+
+        .loader {
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto 0;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- Header --- */
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        header .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            font-weight: 300;
+        }
+
+        /* --- Metrics Grid --- */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .metric-card {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .metric-card h3 {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-card p {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* --- Section Titles --- */
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+        }
+
+        /* --- Charts Section --- */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .chart-card {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-card h3 {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .full-width {
+            grid-column: 1 / -1; /* Makes the chart span the full width */
+        }
+
+        /* --- Data Table Section --- */
+        .data-table-section {
+            margin-top: 4rem;
+        }
+
+        #searchInput {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 2rem auto;
+            padding: 12px 20px;
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            border-color: var(--accent-color);
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        #data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        #data-table th, #data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        #data-table thead {
+            background-color: rgba(100, 255, 218, 0.05);
+        }
+
+        #data-table th {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        #data-table tbody tr {
+            transition: background-color 0.3s;
+        }
+
+        #data-table tbody tr:hover {
+            background-color: rgba(100, 255, 218, 0.05);
+        }
+        
+        /* --- NEW: Blog Section --- */
+        .blog-section {
+            margin-top: 4rem;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .blog-card {
+            background: var(--secondary-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(100, 255, 218, 0.1);
+        }
+
+        .blog-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-meta {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-meta span {
+            color: var(--accent-color);
+        }
+
+        .blog-card p {
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more-btn {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            align-self: flex-start;
+            transition: color 0.3s;
+        }
+        
+        .read-more-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        /* --- Scroll Animation --- */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcome-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Welcome, Researcher!</h2>
+            <p>This dashboard provides an interactive overview of marine biodiversity data. Explore key findings, analyze trends, and dive deep into the data.</p>
+            <div class="loader"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Marine Research & Analysis Dashboard</h1>
+            <p class="subtitle">Visualizing the Depths of Our Oceans</p>
+        </header>
+
+        <main>
+            <section class="metrics-grid">
+                <div class="metric-card animate-on-scroll">
+                    <h3>Total Species Logged</h3>
+                    <p>1,280+</p>
+                </div>
+                <div class="metric-card animate-on-scroll">
+                    <h3>Locations Surveyed</h3>
+                    <p>45</p>
+                </div>
+                <div class="metric-card animate-on-scroll">
+                    <h3>Total Biomass (Est.)</h3>
+                    <p>8.2 Tons</p>
+                </div>
+                <div class="metric-card animate-on-scroll">
+                    <h3>Healthy Specimens</h3>
+                    <p>92%</p>
+                </div>
+            </section>
+
+            <section class="charts-section">
+                <h2 class="section-title">Data Visualizations</h2>
+                <div class="charts-grid">
+                    <div class="chart-card animate-on-scroll">
+                        <h3>Catch Method Distribution</h3>
+                        <canvas id="catchMethodChart"></canvas>
+                    </div>
+                    <div class="chart-card animate-on-scroll">
+                        <h3>Fish Health Status</h3>
+                        <canvas id="healthStatusChart"></canvas>
+                    </div>
+                    <div class="chart-card animate-on-scroll">
+                        <h3>Size Classifications</h3>
+                        <canvas id="sizeChart"></canvas>
+                    </div>
+                    <div class="chart-card full-width animate-on-scroll">
+                        <h3>Biomass (kg) by Major Location</h3>
+                        <canvas id="biomassChart"></canvas>
+                    </div>
+                    <div class="chart-card full-width animate-on-scroll">
+                        <h3>Species Sightings Trend (Last 12 Months)</h3>
+                        <canvas id="sightingsTrendChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="data-table-section animate-on-scroll">
+                <h2 class="section-title">Explore Raw Data</h2>
+                <input type="text" id="searchInput" placeholder="Search by species, location, or method...">
+                <div class="table-container">
+                    <table id="data-table">
+                        <thead>
+                            <tr>
+                                <th>Location</th>
+                                <th>Species</th>
+                                <th>Biomass (kg)</th>
+                                <th>Catch Method</th>
+                                <th>Health</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Visakhapatnam</td>
+                                <td>Indian Mackerel</td>
+                                <td>120</td>
+                                <td>Gill Net</td>
+                                <td>Healthy</td>
+                            </tr>
+                            <tr>
+                                <td>Kochi</td>
+                                <td>Pearl Spot</td>
+                                <td>80</td>
+                                <td>Purse Seine</td>
+                                <td>Healthy</td>
+                            </tr>
+                            <tr>
+                                <td>Bay of Bengal</td>
+                                <td>Hilsa Shad</td>
+                                <td>200</td>
+                                <td>Gill Net</td>
+                                <td>Healthy</td>
+                            </tr>
+                            <tr>
+                                <td>Arabian Sea</td>
+                                <td>Oil Sardine</td>
+                                <td>140</td>
+                                <td>Hook and Line</td>
+                                <td>Healthy</td>
+                            </tr>
+                             <tr>
+                                <td>Indian Ocean</td>
+                                <td>Yellowfin Tuna</td>
+                                <td>750</td>
+                                <td>Long Line</td>
+                                <td>Healthy</td>
+                            </tr>
+                             <tr>
+                                <td>Laccadive Sea</td>
+                                <td>Parrotfish</td>
+                                <td>700</td>
+                                <td>Trawl Net</td>
+                                <td>Healthy</td>
+                            </tr>
+                            <tr>
+                                <td>Andaman Sea</td>
+                                <td>Grouper</td>
+                                <td>540</td>
+                                <td>Hook and Line</td>
+                                <td>Live</td>
+                            </tr>
+                            <tr>
+                                <td>Gulf of Kutch</td>
+                                <td>Coral Trout</td>
+                                <td>170</td>
+                                <td>Trawl Net</td>
+                                <td>Healthy</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <section class="blog-section animate-on-scroll">
+                <h2 class="section-title">Recent Findings & Research Blogs</h2>
+                <div class="blog-grid">
+                    <div class="blog-card animate-on-scroll">
+                        <h3>The Economic & Genetic Significance of Hilsa Shad</h3>
+                        <p class="blog-meta">Location: <span>Bay of Bengal</span></p>
+                        <p>Our latest surveys in the Bay of Bengal confirm the high economic importance of Hilsa Shad, a cornerstone of deep-sea fish exports. Concurrently, genetic studies are underway to understand the dynamics and sustainability of this vital species.</p>
+                        <a href="#" class="read-more-btn">Read More &rarr;</a>
+                    </div>
+                    <div class="blog-card animate-on-scroll">
+                        <h3>Biodiversity Hotspot: Sundarbans Mangrove Estuaries</h3>
+                        <p class="blog-meta">Location: <span>Sundarbans</span></p>
+                        <p>The mangrove estuaries of the Sundarbans continue to be a crucial habitat for high-demand species like Tiger Prawns and Mud Crabs. Ongoing research focuses on the migratory patterns and genetic diversity of these crustaceans, which are vital for local economies.</p>
+                        <a href="#" class="read-more-btn">Read More &rarr;</a>
+                    </div>
+                    <div class="blog-card animate-on-scroll">
+                        <h3>Breakthrough in Tracking Elusive Species with eDNA</h3>
+                        <p class="blog-meta">Location: <span>Gulf of Mannar</span></p>
+                        <p>Environmental DNA (eDNA) analysis is revolutionizing how we monitor rare and elusive fish in the complex coral reef ecosystems of the Gulf of Mannar. This non-invasive method allows us to map species distribution and health more accurately than ever before.</p>
+                        <a href="#" class="read-more-btn">Read More &rarr;</a>
+                    </div>
+                </div>
+            </section>
+            </main>
+
+        <footer>
+            <p>&copy; 2025 Marine Research Institute. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Pop-up Modal Logic ---
+            const modal = document.getElementById('welcome-modal');
+            const closeButton = document.querySelector('.close-button');
+
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 500);
+
+            closeButton.addEventListener('click', () => {
+                modal.classList.remove('show');
+            });
+
+            // --- Chart.js Global Configuration ---
+            Chart.defaults.color = 'rgba(204, 214, 246, 0.8)';
+            Chart.defaults.borderColor = 'rgba(136, 146, 176, 0.2)';
+
+            // --- Chart 1: Catch Method Distribution (Pie Chart) ---
+            new Chart(document.getElementById('catchMethodChart').getContext('2d'), {
+                type: 'pie',
+                data: {
+                    labels: ['Gill Net', 'Trawl Net', 'Hook and Line', 'Purse Seine', 'Long Line'],
+                    datasets: [{
+                        label: 'Catch Method',
+                        data: [45, 25, 15, 10, 5],
+                        backgroundColor: ['#64ffda', '#1d9bf0', '#38bdf8', '#7dd3fc', '#0e7490'],
+                        borderColor: 'var(--secondary-bg)',
+                        borderWidth: 2,
+                    }]
+                },
+                options: { responsive: true, plugins: { legend: { position: 'top' } } }
+            });
+
+            // --- Chart 2: Fish Health Status (Doughnut Chart) ---
+            new Chart(document.getElementById('healthStatusChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Healthy', 'Live', 'Diseased/Stressed'],
+                    datasets: [{
+                        label: 'Health Status',
+                        data: [78, 14, 8],
+                        backgroundColor: ['#64ffda', '#38bdf8', '#f87171'],
+                        borderColor: 'var(--secondary-bg)',
+                        borderWidth: 2,
+                    }]
+                },
+                options: { responsive: true, plugins: { legend: { position: 'top' } } }
+            });
+
+            // --- Chart 3: Size Classifications (Pie Chart) ---
+            new Chart(document.getElementById('sizeChart').getContext('2d'), {
+                type: 'pie',
+                data: {
+                    labels: ['Small (<15cm)', 'Medium (15-50cm)', 'Large (>50cm)'],
+                    datasets: [{
+                        label: 'Size Classification',
+                        data: [35, 55, 10],
+                        backgroundColor: ['#64ffda', '#1d9bf0', '#38bdf8'],
+                        borderColor: 'var(--secondary-bg)',
+                        borderWidth: 2,
+                    }]
+                },
+                 options: { responsive: true, plugins: { legend: { position: 'top' } } }
+            });
+            
+            // --- Chart 4: Biomass by Location (Bar Graph) ---
+            new Chart(document.getElementById('biomassChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Bay of Bengal', 'Arabian Sea', 'Indian Ocean', 'Laccadive Sea', 'Andaman Sea'],
+                    datasets: [{
+                        label: 'Biomass (kg)',
+                        data: [200, 140, 750, 700, 540],
+                        backgroundColor: 'rgba(100, 255, 218, 0.5)',
+                        borderColor: 'rgba(100, 255, 218, 1)',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(136, 146, 176, 0.1)' } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // --- Chart 5: Species Sightings Trend (Line Graph) ---
+            new Chart(document.getElementById('sightingsTrendChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Unique Species Sightings',
+                        data: [65, 59, 80, 81, 56, 55, 40, 62, 75, 90, 95, 88],
+                        fill: true,
+                        backgroundColor: 'rgba(100, 255, 218, 0.1)',
+                        borderColor: 'rgba(100, 255, 218, 1)',
+                        tension: 0.3,
+                        pointBackgroundColor: 'rgba(100, 255, 218, 1)',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { grid: { color: 'rgba(136, 146, 176, 0.1)' } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // --- Scroll Animation Logic ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+            elementsToAnimate.forEach(el => observer.observe(el));
+
+
+            // --- Live Table Search Logic ---
+            const searchInput = document.getElementById('searchInput');
+            const tableRows = document.querySelectorAll('#data-table tbody tr');
+
+            searchInput.addEventListener('keyup', (event) => {
+                const searchTerm = event.target.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const rowText = row.textContent.toLowerCase();
+                    if (rowText.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,782 @@
+[
+  {
+    "location": "Visakhapatnam",
+    "species": "Mackerel, Sardines, Tuna, Pomfret, Anchovies",
+    "habitats": "Coastal marine waters, sandy beaches, rocky shores",
+    "traits": "Fast-swimming pelagic fish, high salinity tolerance",
+    "economic_importance": "Major fishing hub for tuna, sardines; export of shrimp",
+    "health_genetics": "Some species studied for salinity tolerance genes",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Visakhapatnam",
+    "species": "Olive Ridley Turtles, Dolphins, Sea Horses, Prawns, Crabs",
+    "habitats": "Mangroves, estuaries, shallow coastal waters",
+    "traits": "Bottom dwellers, mud-loving species, brackish adaptability",
+    "economic_importance": "Supports prawn hatcheries, local fish markets",
+    "health_genetics": "Genetic research on brackish water species like milkfish",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Kochi",
+    "species": "Shrimp, Tuna, Mackerel, Sardines, Anchovies",
+    "habitats": "Backwaters, lagoons, mangrove swamps",
+    "traits": "Brackish water species, estuarine breeders",
+    "economic_importance": "Key centre for shrimp farming, pearlspot fishery",
+    "health_genetics": "Pearlspot studied for growth-promoting genes",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Kochi",
+    "species": "Sea Cucumbers, Mud Crabs, Mangrove Oysters, Jellyfish",
+    "habitats": "Estuarine waters, mudflats, sandy beaches",
+    "traits": "Migratory estuarine fish, high oxygen demand",
+    "economic_importance": "Supports seafood export, anchovy fishery",
+    "health_genetics": "Ongoing DNA barcoding for anchovy species",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Bay of Bengal",
+    "species": "Hilsa Fish, Sardines, Anchovies, Mackerel, Pomfret",
+    "habitats": "Open sea, estuarine zones, deltas",
+    "traits": "Large pelagic fish, high migratory patterns",
+    "economic_importance": "Tuna, mackerel, hilsa—commercial fishing",
+    "health_genetics": "Hilsa genetics used in breeding programs",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Bay of Bengal",
+    "species": "Olive Ridley Turtles, Dolphins, Dugongs, Sea Horses",
+    "habitats": "Mangroves, sandy shores, coastal lagoons",
+    "traits": "Brackish and freshwater mixing species",
+    "economic_importance": "Prawn seed collection, crab export",
+    "health_genetics": "Genetic mapping of prawn populations",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Bay of Bengal",
+    "species": "Kingfish, Indian Mackerel, Ribbon Fish, Prawns, Squid",
+    "habitats": "Continental shelf, deep-sea waters, pelagic zones",
+    "traits": "Deep-sea species, high pressure adaptation",
+    "economic_importance": "Deep-sea tuna & cuttlefish export",
+    "health_genetics": "Genomics of deep-sea fish under study",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Arabian Sea",
+    "species": "Tuna, Sharks, Mackerel, Sardines, Anchovies",
+    "habitats": "Open sea, continental shelf, coral reef edges",
+    "traits": "Coral reef-associated fish, vibrant colors",
+    "economic_importance": "Supports reef fish trade and ornamental fish export",
+    "health_genetics": "Coral reef fish genetics studied for climate adaptation",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Arabian Sea",
+    "species": "Dugongs, Dolphins, Sea Cucumbers, Sea Horses",
+    "habitats": "Seagrass beds, mangroves, coral reefs",
+    "traits": "Open ocean pelagic species, long migratory",
+    "economic_importance": "Tuna and sardine fishery, oil sardine exports",
+    "health_genetics": "Genetic data on tuna stocks for sustainable fishing",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Arabian Sea",
+    "species": "Flying Fish, Sailfish, Swordfish, Jellyfish",
+    "habitats": "Open pelagic waters, surface warm layers",
+    "traits": "Surface plankton feeders, high reproduction rate",
+    "economic_importance": "Plankton-based fisheries, mackerel trade",
+    "health_genetics": "Studies on plankton-feeding fish DNA",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Indian Ocean",
+    "species": "Yellowfin Tuna, Sharks, Bluefin Tuna, Swordfish",
+    "habitats": "Deep oceanic waters, pelagic zones, seamount areas",
+    "traits": "Oceanic tuna, high migratory behavior",
+    "economic_importance": "Tuna fishing for export, shark fin trade",
+    "health_genetics": "Tuna genome sequencing for stock management",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Indian Ocean",
+    "species": "Dugongs, Sea Turtles, Dolphins, Sea Cows",
+    "habitats": "Coral reefs, seagrass meadows, sandy islands",
+    "traits": "Coral reef fish, tropical warm-water species",
+    "economic_importance": "Ornamental fish export, reef tourism economy",
+    "health_genetics": "Genetic research on coral-associated fish",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Laccadive Sea",
+    "species": "Skipjack Tuna, Reef Fish, Sardines, Anchovies",
+    "habitats": "Coral reef lagoons, open ocean, deep reef slopes",
+    "traits": "Reef-building fish, high biodiversity",
+    "economic_importance": "Ornamental fish export, reef fishery",
+    "health_genetics": "Genetic work on reef resilience",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Laccadive Sea",
+    "species": "Sea Cucumbers, Lobsters, Sea Horses, Coral Reef Fish",
+    "habitats": "Coral reef flats, sandy lagoons, atolls",
+    "traits": "Seagrass-associated herbivorous fish",
+    "economic_importance": "Supports turtle feeding zones, sea cucumber trade",
+    "health_genetics": "Seagrass fish genetics for conservation",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Laccadive Sea",
+    "species": "Reef Sharks, Butterfly Fish, Parrot Fish, Angelfish",
+    "habitats": "Coral reef slopes, shallow lagoons, seagrass beds",
+    "traits": "Atoll-associated fish, reef predators",
+    "economic_importance": "Tuna pole-and-line fishery",
+    "health_genetics": "Genetic tagging of tuna",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Raichak Lake",
+    "species": "Rohu, Catla, Mrigal, Tilapia",
+    "habitats": "Freshwater lake, river-fed shallow zones",
+    "traits": "Freshwater carps, slow swimmers",
+    "economic_importance": "Inland fish farming hub",
+    "health_genetics": "Genetic research on carp breeding",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Raichak Lake",
+    "species": "Freshwater Prawns, Catfish, Indian Major Carps",
+    "habitats": "Freshwater lake, muddy bottoms, vegetated edges",
+    "traits": "Mud-loving catfish, freshwater prawns",
+    "economic_importance": "Supports local markets, aquaculture",
+    "health_genetics": "DNA studies on catfish for disease resistance",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Mangalore Lake",
+    "species": "Milkfish, Mullets, Catfish, Prawns",
+    "habitats": "Brackish water lake, mangrove fringes, estuarine mix",
+    "traits": "Brackish water fish, estuarine species",
+    "economic_importance": "Shrimp farming, ornamental fish breeding",
+    "health_genetics": "Shrimp genetics for disease resistance",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Mangalore Lake",
+    "species": "Tilapia, Catfish, Snakehead Murrel, Prawns",
+    "habitats": "Freshwater lake, vegetated banks, shallow muddy beds",
+    "traits": "Freshwater carps, oxygen-tolerant species",
+    "economic_importance": "Inland aquaculture, local consumption",
+    "health_genetics": "Genetic mapping of carp varieties",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Mangalore Lake",
+    "species": "Mud Crabs, Freshwater Mussels, Barbs, Guppies",
+    "habitats": "Brackish backwater, estuarine mudflats, mangrove patches",
+    "traits": "Mangrove-associated fish, brackish prawns",
+    "economic_importance": "Mangrove fishery, mud crab farming",
+    "health_genetics": "Crab genetics under study",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Andaman Sea",
+    "species": "Tuna, Squid, Jellyfish, Mackerel",
+    "habitats": "Shallow coastal sea, sandy beaches, coral reefs",
+    "traits": "Coral reef fish, high color diversity",
+    "economic_importance": "Tourism-driven reef fish economy",
+    "health_genetics": "DNA barcoding of reef fish",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Andaman Sea",
+    "species": "Sea Cucumbers, Sea Horses, Dolphins, Reef Fish",
+    "habitats": "Coral reefs, seagrass beds, sandy lagoons",
+    "traits": "Mangrove fish, estuarine breeders",
+    "economic_importance": "Mangrove fisheries, mud crab export",
+    "health_genetics": "Genetic work on mangrove fish",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Andaman Sea",
+    "species": "Lobsters, Coral Reef Fish, Sea Turtles, Starfish",
+    "habitats": "Coral reefs, mangroves, rocky islands",
+    "traits": "Pelagic predators, fast swimmers",
+    "economic_importance": "Tuna fishery, ornamental export",
+    "health_genetics": "Tuna stock genetic studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Gulf of Kutch",
+    "species": "Prawns, Crabs, Oysters, Pomfret",
+    "habitats": "Tidal mudflats, mangroves, sandy shores",
+    "traits": "Mudflat fish, high salinity tolerance",
+    "economic_importance": "Local prawn fishery, saltwater fish export",
+    "health_genetics": "Genetic work on high-salinity fish",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Gulf of Kutch",
+    "species": "Mudskippers, Horseshoe Crabs, Bombay Duck, Clams",
+    "habitats": "Estuarine creeks, mangroves, intertidal zones",
+    "traits": "Mangrove fish, estuarine dwellers",
+    "economic_importance": "Mud crab farming, prawn hatcheries",
+    "health_genetics": "Genetic diversity studies in mud crab",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Gulf of Kutch",
+    "species": "Hilsa Fish, Pomfret, Catfish, Prawns",
+    "habitats": "Tidal flats, mudflats, estuarine backwaters",
+    "traits": "Intertidal fish, tidal pool species",
+    "economic_importance": "Local small fish markets",
+    "health_genetics": "DNA studies of intertidal species",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Gulf of Khambhat",
+    "species": "Prawns, Bombay Duck, Crabs, Clams",
+    "habitats": "Mangroves, mudflats, intertidal creeks",
+    "traits": "Brackish estuarine fish, mud-loving",
+    "economic_importance": "Prawn seed collection, crab farming",
+    "health_genetics": "Prawn genetics for aquaculture",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Gulf of Mannar",
+    "species": "Pearl Oysters, Sea Cucumbers, Coral Reef Fish, Dugongs",
+    "habitats": "Coral reef lagoons, sandy shores, mangrove swamps",
+    "traits": "Coral reef fish, seagrass herbivores",
+    "economic_importance": "Reef tourism, ornamental trade, pearl fishery",
+    "health_genetics": "Genetic research on seagrass fish",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Gulf of Mannar",
+    "species": "Dolphins, Sea Horses, Prawns, Tuna",
+    "habitats": "Coral reefs, seagrass meadows, sandy bottoms",
+    "traits": "Reef predators, migratory pelagics",
+    "economic_importance": "Tuna fishing, reef fish market",
+    "health_genetics": "Genetic mapping of tuna",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Gulf of Mannar",
+    "species": "Reef Sharks, Parrot Fish, Angel Fish, Clown Fish",
+    "habitats": "Coral reefs, shallow lagoons, mangrove edges",
+    "traits": "Shallow lagoon fish, mangrove dwellers",
+    "economic_importance": "Mangrove fish farming, crab trade",
+    "health_genetics": "Crab DNA studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Palk Strait",
+    "species": "Milkfish, Mullet, Sardines, Anchovies",
+    "habitats": "Brackish waters, mudflats, mangrove fringes",
+    "traits": "Brackish water fish, mudflat dwellers",
+    "economic_importance": "Prawn farming, mud crab trade",
+    "health_genetics": "Genetics of brackish prawns",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Palk Strait",
+    "species": "Catfish, Tilapia, Barbs, Indian Major Carps",
+    "habitats": "Estuarine creeks, mangrove forests, tidal flats",
+    "traits": "Estuarine fish, salinity-tolerant",
+    "economic_importance": "Local small fish markets",
+    "health_genetics": "DNA analysis of estuarine fish",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Strait of Malacca",
+    "species": "Mudskippers, Crabs, Prawns, Clams",
+    "habitats": "Mountain lake, clear cold water, vegetated edges",
+    "traits": "Coral reef fish, migratory tuna",
+    "economic_importance": "Tuna export hub",
+    "health_genetics": "Tuna stock genetic studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Strait of Malacca",
+    "species": "Asian Arowana, Murrel, Freshwater Eel, Catfish",
+    "habitats": "Freshwater lake, floating gardens, vegetated shallow zones",
+    "traits": "Deep-sea fish, pelagic predators",
+    "economic_importance": "Deep-sea fishing, squid trade",
+    "health_genetics": "Squid genetics for sustainability",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Wular Lake",
+    "species": "Carps, Catfish, Prawns, Freshwater Mussels",
+    "habitats": "Freshwater lake, cold water marshes, river-fed edges",
+    "traits": "Cold-water carps, oxygen-rich",
+    "economic_importance": "Carp farming, trout fishing",
+    "health_genetics": "Genetic work on snow trout",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Wular Lake",
+    "species": "Golden Mahseer, Trout, Common Carp, Prawns",
+    "habitats": "Freshwater lake, floating gardens, shallow banks",
+    "traits": "Freshwater perch, oxygen-demanding",
+    "economic_importance": "Local fish market",
+    "health_genetics": "Perch DNA mapping",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Dal Lake",
+    "species": "Lotus Fish, Freshwater Snails, Carps, Guppies",
+    "habitats": "Freshwater lake, floating biomass zones, vegetated shallow beds",
+    "traits": "Freshwater carps, high vegetation feeders",
+    "economic_importance": "Carp culture, tourism fish economy",
+    "health_genetics": "Carp breeding genetics",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Dal Lake",
+    "species": "Manipur River Prawn, Catfish, Eels, Barbs",
+    "habitats": "Brackish lagoon, mudflats, estuarine waters",
+    "traits": "Floating vegetation fish, cold-tolerant",
+    "economic_importance": "Ornamental fish breeding",
+    "health_genetics": "DNA analysis of floating habitat fish",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Loktak Lake",
+    "species": "Rohu (Labeo rohita), Catla (Catla catla), Punti (Puntius spp.), Channa spp. (Murrels), Wallago attu, Mystus spp., Prawns",
+    "habitats": "Freshwater lake with phumdis (floating biomass), marshes, open water zones, river-fed inflow",
+    "traits": "Freshwater carps, oxygen-tolerant",
+    "economic_importance": "Carp aquaculture, local market",
+    "health_genetics": "Carp genetic diversity studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Loktak Lake",
+    "species": "Sangai deer (Rucervus eldii eldii), Migratory waterfowl, Snails, Aquatic plants, Frogs",
+    "habitats": "Floating meadows (phumdis), vegetated wetlands, shallow zones, swampy margins, Keibul Lamjao NP",
+    "traits": "Floating biomass fish, low oxygen species",
+    "economic_importance": "Local fishing economy",
+    "health_genetics": "Fish genetics for low-oxygen adaptation",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Chilika Lake",
+    "species": "Mullet (Mugil cephalus), Milkfish, Pearlspot (Etroplus suratensis), Prawns (Penaeus spp.), Crabs, Clams, Seabass, Hilsa",
+    "habitats": "Brackish water lagoon, estuarine marshes, sandy islands, tidal inlets, seagrass beds",
+    "traits": "Brackish lagoon fish, migratory species",
+    "economic_importance": "Prawn farming, tourism fish market",
+    "health_genetics": "Prawn genetics for hatchery production",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Chilika Lake",
+    "species": "Irrawaddy dolphin, Otters, Mollusks, Waterbirds (Flamingos, Herons, etc.)",
+    "habitats": "Brackish lagoon with freshwater inflow, marshy edges, mudflats, migratory bird nesting areas",
+    "traits": "Mangrove fish, estuarine dwellers",
+    "economic_importance": "Crab export, fish markets",
+    "health_genetics": "Crab DNA studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Pulicat Lake",
+    "species": "Mullets, Catfish, Prawns, Crabs, Pearlspot, Anchovies",
+    "habitats": "Brackish coastal lagoon, mudflats, mangroves, sandy barrier islands",
+    "traits": "Brackish lagoon fish, mudflat dwellers",
+    "economic_importance": "Prawn seed collection, crab trade",
+    "health_genetics": "Prawn genetic mapping",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Pulicat Lake",
+    "species": "Flamingos, Pelicans, Egrets, Algae, Benthic organisms",
+    "habitats": "Shallow saline/fresh mix zones, saltpans, seagrass beds, intertidal areas",
+    "traits": "Estuarine fish, mangrove-associated",
+    "economic_importance": "Local fish farming",
+    "health_genetics": "Genetic research on mangrove fish",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Vembanad Lake",
+    "species": "Catla catla, Labeo rohita, Etroplus suratensis, Villorita cyprinoides, Macrobrachium rosenbergii",
+    "habitats": "Brackish lagoons, estuarine backwaters, mangrove fringes, shallow muddy zones",
+    "traits": "Brackish water species, estuarine breeders, salinity-tolerant",
+    "economic_importance": "Major prawn and clam fisheries, backwater tourism",
+    "health_genetics": "DNA barcoding of clams and prawns; studies on pollution tolerance",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Vembanad Lake",
+    "species": "Poecilia spp., Trichopodus microlepis, Mollusks, Crabs, Amphipods",
+    "habitats": "Mangrove estuaries, river-fed wetlands, swampy edges",
+    "traits": "Hosts estuarine birds, mangrove crabs, mollusks, aquatic plants",
+    "economic_importance": "Ecotourism, mangrove biodiversity conservation",
+    "health_genetics": "Microbial and mollusk diversity studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Sambhar Salt Lake",
+    "species": "Dunaliella salina (algae), Brine shrimp (Artemia spp.), Halophilic microbes",
+    "habitats": "Hypersaline shallow lake, salt pans, dry wetlands, microbial mats",
+    "traits": "Hypersaline-tolerant organisms, brine shrimp bloom in monsoon",
+    "economic_importance": "Salt production, migratory bird tourism",
+    "health_genetics": "Halophile genetics, extremophile microbial DNA studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Sambhar Salt Lake",
+    "species": "Greater flamingo, Lesser flamingo, Pelicans, Sandpipers, Migratory waterfowl",
+    "habitats": "Mudflats, saline lagoons, bird nesting grounds, avian resting areas",
+    "traits": "Flamingo breeding site, algae blooms, halophilic microbes",
+    "economic_importance": "Wetland conservation, avian ecotourism",
+    "health_genetics": "Algal species studied for salt stress genes",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Bhimtal Lake",
+    "species": "Indian Major Carps (Catla, Rohu, Mrigal), Tilapia, Snow trout",
+    "habitats": "Freshwater hill lake, steep edges, moderate depths with vegetated zones",
+    "traits": "Cold freshwater carps, low nutrient-tolerant species",
+    "economic_importance": "Local fishing, small aquaculture",
+    "health_genetics": "Carp species studied for cold tolerance",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Bhimtal Lake",
+    "species": "Aquatic insects, plankton, small native fishes",
+    "habitats": "Freshwater, rocky shores, submerged vegetation areas",
+    "traits": "Aquatic insects, phytoplankton, native mollusks",
+    "economic_importance": "Local fish feed base, biodiversity attraction",
+    "health_genetics": "Planktonic biodiversity studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Nainital Lake",
+    "species": "Snow trout, Labeo dero, Tilapia, Indian carps",
+    "habitats": "High-altitude cold freshwater lake, clear oligotrophic water, rocky and vegetated banks",
+    "traits": "Cold-water species, oligotrophic fish (e.g. snow trout, carps)",
+    "economic_importance": "Limited fishing, tourism boating",
+    "health_genetics": "Trout species genetics for high-altitude aquaculture",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Nainital Lake",
+    "species": "Freshwater snails, small crustaceans, aquatic birds",
+    "habitats": "Shallow banks with aquatic vegetation, cold water margins",
+    "traits": "Freshwater snails, aquatic insects, birds",
+    "economic_importance": "Birdwatching, tourism economy",
+    "health_genetics": "Snail and fish population health assessments",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Sat Tal",
+    "species": "Snow trout, Catla, Barbs, Tilapia",
+    "habitats": "Freshwater cluster lake, clean waters, surrounded by forest, rocky and vegetated shores",
+    "traits": "Clear freshwater habitat, home to snow trout, catla, and barbs",
+    "economic_importance": "Local fish stocking and angling tourism",
+    "health_genetics": "Fish genetics for restocking and breeding",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Sat Tal",
+    "species": "Frogs, aquatic insects, native freshwater organisms",
+    "habitats": "Forest-lined shallow pools, vegetated shallows",
+    "traits": "Native amphibians, macroinvertebrates",
+    "economic_importance": "Environmental education, eco-tourism",
+    "health_genetics": "Biodiversity monitoring via eDNA",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Lonar Lake",
+    "species": "Alkaliphilic bacteria, cyanobacteria, brine shrimp",
+    "habitats": "Saline alkaline crater lake, shallow depth, rocky shores",
+    "traits": "Alkaline crater lake, cyanobacteria-rich, few fish",
+    "economic_importance": "Scientific tourism, birdwatching",
+    "health_genetics": "Microbial and algal genome studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Lonar Lake",
+    "species": "Mollusks, aquatic insects",
+    "habitats": "Alkaline waters with microbial mats, brackish sediments",
+    "traits": "Haloalkaliphilic microbes, algae, seasonal insects",
+    "economic_importance": "Limnology and extremophile research",
+    "health_genetics": "Microbial genome sequencing",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Lonar Lake",
+    "species": "Phytoplankton, zooplankton",
+    "habitats": "Lake waters with seasonal fluctuations in salinity and temperature",
+    "traits": "Migratory birds, microbial mats",
+    "economic_importance": "Bird conservation, tourism",
+    "health_genetics": "eDNA studies of microbial communities",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Tsomoriri Lake",
+    "species": "Snow trout (Schizothorax), Schizopygopsis spp.",
+    "habitats": "High-altitude cold freshwater lake, oligotrophic, rocky shores, very low temperatures",
+    "traits": "Cold, high-altitude lake, few hardy fish (snow trout)",
+    "economic_importance": "Wetland conservation, biodiversity zone",
+    "health_genetics": "Trout species studied for hypoxia and cold resistance",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Tsomoriri Lake",
+    "species": "Aquatic insects, plankton",
+    "habitats": "Alpine lake with rocky bottom and sparse aquatic vegetation",
+    "traits": "Breeding ground for black-necked cranes, minimal fish diversity",
+    "economic_importance": "Ecotourism, avian habitat protection",
+    "health_genetics": "DNA barcoding of birds and environmental stress analysis",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Pangong Tso",
+    "species": "Endemic fish species like Triplophysa spp., aquatic insects",
+    "habitats": "High-altitude saline lake with fluctuating water levels, rocky shores",
+    "traits": "Brackish, extreme cold water, minimal fish presence",
+    "economic_importance": "Adventure and eco-tourism, strategic ecological interest",
+    "health_genetics": "Extremophile genetics, avian habitat surveys",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Pangong Tso",
+    "species": "Phytoplankton",
+    "habitats": "Cold desert saline lake with limited aquatic flora and fauna",
+    "traits": "Migratory bird species, few aquatic invertebrates",
+    "economic_importance": "Birdwatching and eco-tourism",
+    "health_genetics": "Genetic surveys of invertebrates and water quality markers",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Hussain Sagar",
+    "species": "Major carps (Catla, Rohu), Tilapia, Common carp",
+    "habitats": "Artificial freshwater lake, moderate depth, eutrophic conditions",
+    "traits": "Urban lake with high pollution load, hardy fish (catla, rohu)",
+    "economic_importance": "Limited fishery, urban recreation",
+    "health_genetics": "Water quality impact on fish genetics",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Hussain Sagar",
+    "species": "Snails, aquatic insects",
+    "habitats": "Urban lake with macrophyte beds, muddy bottoms",
+    "traits": "Cyanobacteria, high eutrophication, algal blooms",
+    "economic_importance": "Algal monitoring, environmental restoration programs",
+    "health_genetics": "DNA studies on eutrophic plankton",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Hussain Sagar",
+    "species": "Amphibians, waterbirds",
+    "habitats": "Shallow wetlands, urban waterbody",
+    "traits": "Floating weeds, pollution-resistant species",
+    "economic_importance": "Cleanup campaigns, biodiversity impact assessments",
+    "health_genetics": "eDNA for urban pollution biomarkers",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Pong Lake",
+    "species": "Major carps, Catfish, Tilapia",
+    "habitats": "Reservoir with deep waters, river-fed, variable depths",
+    "traits": "Cold freshwater reservoir, supports Indian major carps and trout",
+    "economic_importance": "Reservoir fishing, power generation, water source",
+    "health_genetics": "Trout and carp genetic studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Pong Lake",
+    "species": "Aquatic insects, plankton",
+    "habitats": "Freshwater reservoir ecosystem with seasonal fluctuations",
+    "traits": "Wetland for migratory birds, aquatic vegetation",
+    "economic_importance": "Ramsar site, bird tourism",
+    "health_genetics": "Bird population health monitoring",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Hirakud Reservoir",
+    "species": "Catla, Rohu, Mrigal, Wallago attu (catfish)",
+    "habitats": "Large multipurpose reservoir, riverine and lacustrine habitats",
+    "traits": "Warm freshwater, Indian major carps, catfish",
+    "economic_importance": "Major inland fishery, irrigation, hydropower",
+    "health_genetics": "Genetic improvement of carp varieties",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Hirakud Reservoir",
+    "species": "Aquatic plants, plankton",
+    "habitats": "Freshwater reservoir with fluctuating water levels",
+    "traits": "Reservoir with planktonic diversity, seasonal species bloom",
+    "economic_importance": "Fishing cooperatives, hatchery-linked farming",
+    "health_genetics": "Zooplankton genome monitoring",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Hirakud Reservoir",
+    "species": "Mollusks, aquatic insects",
+    "habitats": "Submerged and littoral zones",
+    "traits": "Supports multiple fish breeding grounds",
+    "economic_importance": "Inland aquaculture source",
+    "health_genetics": "Breeding program genomic research",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Gobind Sagar",
+    "species": "Major carps, Mahseer",
+    "habitats": "Reservoir with rocky substrate, riverine habitats",
+    "traits": "Coldwater reservoir, carp and trout mix",
+    "economic_importance": "Major fishery of Himachal Pradesh",
+    "health_genetics": "Trout strain improvement studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Rana Pratap Sagar",
+    "species": "Rohu, Catla, Mrigal",
+    "habitats": "Freshwater reservoir, lacustrine and riverine habitats",
+    "traits": "Deep freshwater reservoir, Indian carps, mahseer",
+    "economic_importance": "Inland aquaculture, angling tourism",
+    "health_genetics": "Mahseer genetic studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Rana Pratap Sagar",
+    "species": "Plankton, aquatic insects",
+    "habitats": "Littoral zones with emergent vegetation",
+    "traits": "Clear water, macrophyte-dominated habitat",
+    "economic_importance": "Boating, bird watching",
+    "health_genetics": "Water quality-linked genetic monitoring",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Upper Lake (Bhojtal)",
+    "species": "Rohu, Catla, Tilapia",
+    "habitats": "Urban freshwater lake, shallow, muddy bottom",
+    "traits": "Freshwater lake, carp-dominant, high productivity",
+    "economic_importance": "Local fish markets, recreation",
+    "health_genetics": "Indian major carp strain monitoring",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Upper Lake (Bhojtal)",
+    "species": "Mollusks, amphibians",
+    "habitats": "Vegetated shores, wetland patches",
+    "traits": "Urban freshwater body, seasonal algal blooms",
+    "economic_importance": "Domestic water source, urban biodiversity project",
+    "health_genetics": "Algal DNA for bloom prediction",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Lower Lake (Chhota Talab)",
+    "species": "Catfish, Carps, Tilapia",
+    "habitats": "Freshwater urban lake, eutrophic, muddy bottoms",
+    "traits": "Small urban lake, nutrient-rich, supports carps and catfish",
+    "economic_importance": "Small-scale fishery, local recreation",
+    "health_genetics": "Fish population health studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Lower Lake (Chhota Talab)",
+    "species": "Plankton, aquatic insects",
+    "habitats": "Vegetated shallow zones, submerged plants",
+    "traits": "Urban runoff, pollution-tolerant organisms",
+    "economic_importance": "Ecological restoration efforts",
+    "health_genetics": "Environmental DNA pollution tracking",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Ashtamudi Lake",
+    "species": "Pearl spot (Etroplus suratensis), Prawns, Mud crabs",
+    "habitats": "Brackish water lagoon, mangrove fringes, estuarine backwaters",
+    "traits": "Estuarine backwater lake, high salinity zones, prawns, pearlspot",
+    "economic_importance": "Major prawn fishery, clam exports, tourism",
+    "health_genetics": "Prawn and clam genetics, estuarine species eDNA studies",
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "location": "Ashtamudi Lake",
+    "species": "Shellfish, small fish species",
+    "habitats": "Estuarine mudflats, mangrove swamps",
+    "traits": "Mangrove crabs, shellfish, migratory birds",
+    "economic_importance": "Ramsar site, fish export market",
+    "health_genetics": "Genetic conservation of estuarine shellfish",
+    "latitude": null,
+    "longitude": null
+  }
+]

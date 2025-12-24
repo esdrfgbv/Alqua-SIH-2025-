@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>India Waterbodies Map</title>
+<link rel="stylesheet" href="/static/css/styles.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+<div id="app">
+<header class="topbar">
+<div class="brand">India Waterbodies</div>
+<div class="controls">
+<input id="search" placeholder="Search river / lake / port..." />
+<button id="btn-zoom-india">Zoom India</button>
+</div>
+</header>
+
+
+<div id="map"></div>
+
+
+<aside id="sidebar" class="collapsed">
+<button id="close-sidebar">×</button>
+<div id="info-title"></div>
+<div id="info-content"></div>
+<canvas id="chart" height="200"></canvas>
+</aside>
+
+
+<div id="notification" class="hidden"></div>
+</div>
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

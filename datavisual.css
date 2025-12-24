@@ -1,0 +1,15 @@
+body {
+  background-image: url("./datavisual.png");
+  background-size: cover;      /* Makes it cover the whole screen. */
+  background-repeat: no-repeat;/* Stops tiling. */
+  background-position: center; /* Centers the image. */
+  background-attachment: fixed;/* Keeps it fixed when scrolling. */
+ 
+}
+ #panel{
+            content: url(https://img.freepik.com/premium-vector/researchers-concept-illustration_114360-8124.jpg);
+            float: center;
+            width: 250px;
+            height: 150px;
+            vertical-align: middle;               
+           }

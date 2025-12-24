@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India's Marine Data Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --primary-bg: #0a192f;
+            --secondary-bg: #172a45;
+            --text-primary: #ccd6f6;
+            --text-secondary: #8892b0;
+            --accent-color: #64ffda;
+            --modal-bg: #1e3a5f;
+            --border-color: rgba(100, 255, 218, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: rgba(10, 25, 47, 0.85);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        main {
+            padding: 80px 5% 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            max-width: 800px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #e6f1ff;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .ocean-grid-container h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .ocean-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .ocean-card {
+            background: var(--secondary-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .ocean-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+        }
+
+        .ocean-card h3 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .ocean-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .ocean-card .explore-btn {
+            display: inline-block;
+            color: var(--accent-color);
+            text-decoration: none;
+            border: 1px solid var(--accent-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .ocean-card .explore-btn:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--modal-bg);
+            margin: 5% auto;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            width: 80%;
+            max-width: 1200px;
+            border-radius: 10px;
+            position: relative;
+            animation: fadeIn 0.5s;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: white;
+        }
+
+        .modal-body {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .modal-info {
+            flex: 1;
+        }
+
+        .modal-charts {
+            flex: 2;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .chart-container {
+            flex: 1;
+            background-color: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .modal-content h2 {
+            color: var(--accent-color);
+            font-size: 2rem;
+        }
+        .modal-content h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .modal-info ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        .modal-info li {
+            background-color: var(--secondary-bg);
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+        .modal-info li strong {
+            color: var(--accent-color);
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: scale(0.9);}
+            to {opacity: 1; transform: scale(1);}
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .modal-body, .modal-charts {
+                flex-direction: column;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            nav ul { display: none; } /* Simple responsive nav for demo */
+        }
+    </style>
+
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">India Marine Data Hub</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <main id="home">
+        <section class="hero">
+            <h1>Exploring India's Marine Ecosystems</h1>
+            <p>A dedicated data hub for researchers studying the Indian Ocean and the seas surrounding the Indian subcontinent. Visualize species distribution and analyze key environmental factors.</p>
+        </section>
+
+        <section id="oceans" class="ocean-grid-container">
+            <h2>Explore India's Oceanic Regions</h2>
+            </section>
+    </main>
+
+    <div id="dataModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title">Ocean Data</h2>
+            <div class="modal-body">
+                <div class="modal-info">
+                    <h3>Key Environmental Factors</h3>
+                    <ul id="modal-factors">
+                        </ul>
+                    <h3>Description</h3>
+                    <p id="modal-description"></p>
+                </div>
+                <div class="modal-charts">
+                    <div class="chart-container">
+                        <h3>Dominant Species Distribution</h3>
+                        <canvas id="speciesPieChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Estimated Biomass by Depth</h3>
+                        <canvas id="biomassBarGraph"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 India Marine Data Hub. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- DATA FOR OCEANS AROUND INDIA ---
+            const oceanData = [
+                {
+                    id: 'indian',
+                    name: 'Indian Ocean',
+                    description: 'The third largest and warmest ocean in the world, its dynamics are dominated by the seasonal monsoon winds which drive regional climate and marine productivity.',
+                    factors: {
+                        'Avg. Temp': '22.1°C (Surface)',
+                        'Avg. Salinity': '34.8 PSU',
+                        'Max Depth': '7,258 m (Java Trench)',
+                        'Key Currents': 'North Equatorial, Somali Current'
+                    },
+                    pieChartData: {
+                        labels: ['Yellowfin Tuna', 'Shrimp', 'Sardines', 'Mackerel', 'Squid', 'Other'],
+                        data: [30, 20, 15, 15, 8, 12]
+                    },
+                    barGraphData: {
+                        labels: ['0-200m', '200-1000m', '1000-4000m', '4000m+'],
+                        data: [75, 35, 18, 2]
+                    }
+                },
+                {
+                    id: 'arabian',
+                    name: 'Arabian Sea',
+                    description: 'Located on India\'s west coast, this sea experiences intense monsoon-driven upwelling, making it a highly productive fishing zone, especially for sardines and mackerel.',
+                    factors: {
+                        'Avg. Temp': '25°C (Surface)',
+                        'Avg. Salinity': '36.5 PSU (High)',
+                        'Max Depth': '4,652 m',
+                        'Key Feature': 'Seasonal Monsoon Currents, Oxygen Minimum Zone'
+                    },
+                    pieChartData: {
+                        labels: ['Indian Mackerel', 'Oil Sardine', 'Tuna', 'Pomfret', 'Shrimp', 'Other'],
+                        data: [25, 20, 15, 15, 10, 15]
+                    },
+                    barGraphData: {
+                        labels: ['0-200m', '200-1000m', '1000-4000m', '4000m+'],
+                        data: [70, 40, 15, 5]
+                    }
+                },
+                {
+                    id: 'bengal',
+                    name: 'Bay of Bengal',
+                    description: 'Bordering India\'s east coast, it is the largest bay in the world. It is characterized by a massive influx of freshwater from rivers like the Ganges, resulting in lower surface salinity.',
+                    factors: {
+                        'Avg. Temp': '26°C (Surface)',
+                        'Avg. Salinity': '32.0 PSU (Low)',
+                        'Max Depth': '4,694 m',
+                        'Key Feature': 'Large Freshwater Influx, Frequent Cyclones'
+                    },
+                    pieChartData: {
+                        labels: ['Hilsa', 'Tiger Prawn', 'Tuna', 'Sardines', 'Mackerel', 'Other'],
+                        data: [30, 20, 15, 15, 10, 10]
+                    },
+                    barGraphData: {
+                        labels: ['0-200m', '200-1000m', '1000-4000m', '4000m+'],
+                        data: [68, 38, 18, 4]
+                    }
+                }
+            ];
+
+            // --- DYNAMICALLY CREATE OCEAN CARDS ---
+            const oceanGridContainer = document.querySelector('.ocean-grid-container');
+            const oceanGrid = document.createElement('div');
+            oceanGrid.className = 'ocean-grid';
+            oceanData.forEach(ocean => {
+                const card = document.createElement('div');
+                card.className = 'ocean-card';
+                card.dataset.oceanId = ocean.id; // Set data attribute to link card to data
+                card.innerHTML = `
+                    <h3>${ocean.name}</h3>
+                    <p>${ocean.description}</p>
+                    <a href="#" class="explore-btn">Explore Data &raquo;</a>
+                `;
+                oceanGrid.appendChild(card);
+            });
+            oceanGridContainer.appendChild(oceanGrid);
+
+            // --- MODAL AND CHART LOGIC ---
+            const modal = document.getElementById('dataModal');
+            const closeModalBtn = document.querySelector('.close-button');
+            let speciesPieChart, biomassBarGraph; // To hold chart instances
+
+            document.querySelectorAll('.ocean-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const oceanId = card.dataset.oceanId;
+                    const data = oceanData.find(o => o.id === oceanId);
+                    if (data) {
+                        openModalWithData(data);
+                    }
+                });
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', (e) => {
+                if (e.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            function openModalWithData(data) {
+                // Populate modal with text data
+                document.getElementById('modal-title').textContent = data.name;
+                document.getElementById('modal-description').textContent = data.description;
+                const factorsList = document.getElementById('modal-factors');
+                factorsList.innerHTML = '';
+                for (const [key, value] of Object.entries(data.factors)) {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${key}:</strong> ${value}`;
+                    factorsList.appendChild(li);
+                }
+
+                // Destroy old charts if they exist to prevent conflicts
+                if (speciesPieChart) speciesPieChart.destroy();
+                if (biomassBarGraph) biomassBarGraph.destroy();
+
+                // Create new charts
+                renderPieChart(data.pieChartData);
+                renderBarGraph(data.barGraphData);
+                
+                modal.style.display = 'block';
+            }
+
+            function renderPieChart(pieData) {
+                const ctx = document.getElementById('speciesPieChart').getContext('2d');
+                speciesPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: pieData.labels,
+                        datasets: [{
+                            label: 'Species Distribution',
+                            data: pieData.data,
+                            backgroundColor: ['#64ffda', '#36a2eb', '#ffce56', '#ff6384', '#cc65fe', '#4bc0c0'],
+                            borderColor: 'var(--modal-bg)',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    color: 'var(--text-primary)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function renderBarGraph(barData) {
+                const ctx = document.getElementById('biomassBarGraph').getContext('2d');
+                biomassBarGraph = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: barData.labels,
+                        datasets: [{
+                            label: 'Biomass (metric tons per km²)',
+                            data: barData.data,
+                            backgroundColor: 'rgba(100, 255, 218, 0.5)',
+                            borderColor: 'rgba(100, 255, 218, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { color: 'var(--text-secondary)' },
+                                grid: { color: 'var(--border-color)' }
+                            },
+                            x: {
+                                ticks: { color: 'var(--text-secondary)' },
+                                grid: { color: 'var(--border-color)' }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fish Taxonomy – Classifying & Naming Organisms</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <video autoplay muted loop id="video-background">
+    <source src="fish_bgg.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <header>
+    <h1>Fish Taxonomy – Classifying & Naming Organisms</h1>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <a href="#" class="sidebar-option" data-info="scale">
+        <span class="icon">🔍</span>
+        <span class="text">Scale</span>
+      </a>
+      <a href="#" class="sidebar-option" data-info="gill">
+        <span class="icon">🌿</span>
+        <span class="text">Respiratory Organ</span>
+      </a>
+      <a href="#" class="sidebar-option" data-info="otolith">
+        <span class="icon">🦴</span>
+        <span class="text">Otolith</span>
+      </a>
+      <a href="#" class="sidebar-option" data-info="habitat">
+        <span class="icon">🌊</span>
+        <span class="text">Habitat</span>
+      </a>
+      <a href="#" class="sidebar-option" data-info="datavisualisation">
+        <span class="icon">📊</span>
+        <span class="text">Data Visualisation</span>
+      </a>
+    </aside>
+
+    <main class="main-content">
+      <div class="interactive-viewer">
+        <img id="fish-model" src="apollo.png" alt="Apollo Fish">
+      </div>
+    </main>
+  </div>
+
+  <section class="bottom-section">
+    <div class="organism-card active" data-organism="apollo">
+      <img src="apollo.jpg" alt="Apollo Fish">
+      <p>Apollo Fish</p>
+    </div>
+    <div class="organism-card" data-organism="whale">
+      <img src="whale.jpg" alt="Blue Whale">
+      <p>Blue Whale</p>
+    </div>
+    <div class="organism-card" data-organism="jellyfish">
+      <img src="jelly.jpg" alt="Jellyfish">
+      <p>Jellyfish</p>
+    </div>
+  </section>
+
+  <div id="info-card" class="info-card hidden">
+    <button id="close-btn" class="close-btn">&times;</button>
+    <h2 id="info-title"></h2>
+    <div id="info-content"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

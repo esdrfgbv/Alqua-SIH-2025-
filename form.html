@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Researcher Blog - Key Points</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for the deep blue ocean theme */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to top, #001f3f, #003366, #005f8d, #008fba);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            animation: pop-up 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        @keyframes pop-up {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            animation: wave-text 3s ease-in-out infinite;
+        }
+
+        @keyframes wave-text {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        label {
+            color: #e0f7fa;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="file"] {
+            background-color: rgba(0, 31, 63, 0.5);
+            border: 1px solid rgba(179, 229, 252, 0.5);
+            border-radius: 10px;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]::placeholder,
+        textarea::placeholder {
+            color: rgba(224, 247, 250, 0.5);
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        input[type="file"]:focus {
+            outline: none;
+            border-color: #80deea;
+            box-shadow: 0 0 15px rgba(128, 222, 234, 0.5);
+            background-color: rgba(0, 31, 63, 0.7);
+        }
+        
+        input[type="file"]::-webkit-file-upload-button {
+            background: #008fba;
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="file"]::-webkit-file-upload-button:hover {
+            background: #0077a0;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #00a8cc, #007bff);
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+            transition: all 0.3s ease-in-out;
+            font-weight: 600;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6);
+        }
+
+        /* Bubble animations */
+        .bubbles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: rise 10s infinite ease-in;
+        }
+
+        .bubble:nth-child(1) { left: 10%; animation-duration: 8s; }
+        .bubble:nth-child(2) { left: 20%; animation-duration: 5s; animation-delay: 1s; width: 20px; height: 20px; }
+        .bubble:nth-child(3) { left: 25%; animation-duration: 7s; animation-delay: 2s; }
+        .bubble:nth-child(4) { left: 40%; animation-duration: 11s; animation-delay: 0s; width: 30px; height: 30px; }
+        .bubble:nth-child(5) { left: 55%; animation-duration: 6s; animation-delay: 1s; }
+        .bubble:nth-child(6) { left: 70%; animation-duration: 9s; animation-delay: 0s; width: 25px; height: 25px; }
+        .bubble:nth-child(7) { left: 85%; animation-duration: 12s; animation-delay: 2s; }
+
+        @keyframes rise {
+            0% {
+                bottom: -100px;
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(100px);
+            }
+            100% {
+                bottom: 1080px;
+                transform: translateX(-200px);
+            }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <div class="form-container w-full max-w-4xl p-6 md:p-10 mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold text-center text-white mb-8">Researcher Blog – Key Points</h1>
+        
+        <form action="#" method="POST" class="space-y-6">
+            <!-- Research Purpose and Relevance -->
+            <div>
+                <label for="purpose" class="block text-sm mb-2">Research Purpose and Relevance</label>
+                <textarea id="purpose" name="purpose" rows="3" class="w-full p-3 text-sm" placeholder="What is the 'why' behind your research? Why does it matter?"></textarea>
+            </div>
+
+            <!-- Background/Context -->
+            <div>
+                <label for="background" class="block text-sm mb-2">Background/Context of the Study Area</label>
+                <textarea id="background" name="background" rows="3" class="w-full p-3 text-sm" placeholder="Set the scene. What should readers know about the background of your study?"></textarea>
+            </div>
+
+            <!-- Objectives or Research Questions -->
+            <div>
+                <label for="objectives" class="block text-sm mb-2">Objectives or Research Questions</label>
+                <textarea id="objectives" name="objectives" rows="3" class="w-full p-3 text-sm" placeholder="List the main questions you aim to answer or the key objectives."></textarea>
+            </div>
+
+            <!-- Field Site Details -->
+            <div>
+                <label for="site" class="block text-sm mb-2">Field Site Details</label>
+                <input type="text" id="site" name="site" class="w-full p-3 text-sm" placeholder="e.g., Location, specific environment, unique characteristics">
+            </div>
+
+            <!-- Data Collection Methods -->
+            <div>
+                <label for="methods" class="block text-sm mb-2">Data Collection Methods</label>
+                <textarea id="methods" name="methods" rows="3" class="w-full p-3 text-sm" placeholder="How did you collect your data? (e.g., sampling, sensors, eDNA, surveys)"></textarea>
+            </div>
+
+            <!-- Key Findings -->
+            <div>
+                <label for="findings" class="block text-sm mb-2">Key Findings or Preliminary Results</label>
+                <textarea id="findings" name="findings" rows="4" class="w-full p-3 text-sm" placeholder="Summarize your most important discoveries so far."></textarea>
+            </div>
+
+            <!-- Visuals -->
+            <div>
+                <label for="visuals" class="block text-sm mb-2">Visuals (Graphs, Maps, Photos, Videos)</label>
+                <input type="file" id="visuals" name="visuals" multiple class="w-full p-2 text-sm text-white">
+            </div>
+
+            <!-- Interpretation -->
+            <div>
+                <label for="interpretation" class="block text-sm mb-2">Interpretation of Results and Implications</label>
+                <textarea id="interpretation" name="interpretation" rows="3" class="w-full p-3 text-sm" placeholder="What do your results mean? What are the broader implications?"></textarea>
+            </div>
+
+            <!-- Challenges or Observations -->
+            <div>
+                <label for="challenges" class="block text-sm mb-2">Challenges or Interesting Field Observations</label>
+                <textarea id="challenges" name="challenges" rows="3" class="w-full p-3 text-sm" placeholder="Any unexpected hurdles, funny moments, or unique observations from the field?"></textarea>
+            </div>
+
+            <!-- Links -->
+            <div>
+                <label for="links" class="block text-sm mb-2">Links to Datasets, Papers, or References</label>
+                <input type="text" id="links" name="links" class="w-full p-3 text-sm" placeholder="e.g., https://yourdata.org, DOI links...">
+            </div>
+
+            <!-- Future Work -->
+            <div>
+                <label for="future-work" class="block text-sm mb-2">Future Work or Next Research Steps</label>
+                <textarea id="future-work" name="future-work" rows="3" class="w-full p-3 text-sm" placeholder="What's next on the horizon for this project?"></textarea>
+            </div>
+            
+            <!-- Call for Collaboration -->
+            <div>
+                <label for="collaboration" class="block text-sm mb-2">Call for Collaboration or Public Engagement</label>
+                <textarea id="collaboration" name="collaboration" rows="3" class="w-full p-3 text-sm" placeholder="Looking for collaborators? Want citizen scientists to get involved?"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center pt-4">
+                <button type="submit" class="submit-btn text-white rounded-full py-3 px-8">Submit Post</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

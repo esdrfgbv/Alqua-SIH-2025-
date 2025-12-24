@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Sea Research Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #020a1a;
+            --secondary-bg: #0a192f;
+            --accent-blue: #64ffda;
+            --light-blue: #a8b2d1;
+            --slate: #8892b0;
+            --dark-slate: #495670;
+            --card-bg: rgba(10, 25, 47, 0.85);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--slate);
+            background-image: linear-gradient(var(--primary-bg) 0%, #010610 100%);
+            overflow-x: hidden;
+        }
+
+        .font-montserrat {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .header {
+            background: var(--secondary-bg);
+            border-bottom: 1px solid var(--dark-slate);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            backdrop-filter: blur(10px);
+            background-color: rgba(2,10,26,0.8);
+        }
+
+        .search-input {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--dark-slate);
+            color: var(--light-blue);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.3);
+        }
+
+        .chart-container, .data-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--dark-slate);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; /* Fix for chart resizing */
+        }
+        
+        .data-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+
+        .status-tag {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .status-healthy {
+            background-color: rgba(100, 255, 218, 0.1);
+            color: var(--accent-blue);
+        }
+        
+        .status-declining {
+            background-color: rgba(255, 115, 115, 0.1);
+            color: #ff7373;
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--dark-slate);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--primary-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--dark-slate);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: var(--slate);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <header class="header p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="font-montserrat text-2xl text-white">Fisheries <span class="text-accent-blue">Dashboard</span></h1>
+            <div class="w-1/3">
+                <input type="text" id="searchInput" class="search-input w-full px-4 py-2 rounded-md" placeholder="Search by fish or location...">
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        
+        <!-- Left Column: Charts -->
+        <div class="lg:col-span-1 space-y-8 sticky top-24">
+            <div class="chart-container p-4">
+                <h2 class="text-lg font-montserrat text-light-blue mb-4">Fish Weight Classification</h2>
+                <canvas id="stockStatusChart"></canvas>
+            </div>
+            <div class="chart-container p-4">
+                <h2 class="text-lg font-montserrat text-light-blue mb-4">Catch by Location (Top 5)</h2>
+                <canvas id="catchByLocationChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Right Column: Data Grid -->
+        <div id="data-grid" class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Fish data cards will be injected here -->
+        </div>
+
+    </main>
+    
+    <!-- Modal -->
+    <div id="details-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden">
+        <div class="modal-content w-full max-w-2xl rounded-lg shadow-xl p-6 text-light-blue relative">
+            <button id="close-modal" class="absolute top-4 right-4 text-2xl font-bold text-slate hover:text-accent-blue">&times;</button>
+            <div id="modal-body">
+                <!-- Modal content injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fishData = [
+                { location: 'Visakhapatnam', fish: 'Indian Mackerel', quantity: 120, size: 80, netType: 'Trawl Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Indian mackerel (Rastrelliger kanagurta)', 'Tuna (Thunnus albacares)'] },
+                { location: 'Visakhapatnam', fish: 'Bombay Duck', quantity: 80, size: 120, netType: 'Trawl Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Tuna (Thunnus albacares)'] },
+                { location: 'Kochi', fish: 'Sardine', quantity: 150, size: 60, netType: 'Purse Seine', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Pearl spot/Karimeen (Etroplus suratensis)'] },
+                { location: 'Kochi', fish: 'Ribbon Fish', quantity: 200, size: 60, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Indian oil sardine (Sardinella longiceps)'] },
+                { location: 'Bay of Bengal', fish: 'Catla', quantity: 200, size: null, netType: 'Cast Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Hilsa shad (Tenualosa ilisha)'] },
+                { location: 'Bay of Bengal', fish: 'Rohu', quantity: 180, size: null, netType: 'Gill Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Indian anchovy (Stolephorus indicus)'] },
+                { location: 'Bay of Bengal', fish: 'Hilsa', quantity: 220, size: null, netType: 'Drift Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Silver pomfret (Pampus argenteus)'] },
+                { location: 'Arabian Sea', fish: 'Pomfret', quantity: 140, size: null, netType: 'Hook and Line', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Indian oil sardine (Sardinella longiceps)'] },
+                { location: 'Arabian Sea', fish: 'Kingfish', quantity: 100, size: null, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Yellowfin tuna (Thunnus albacares)'] },
+                { location: 'Arabian Sea', fish: 'Tuna', quantity: 250, size: null, netType: 'Long Line', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Mahi-mahi/Dolphin fish (Coryphaena hippurus)'] },
+                { location: 'Indian Ocean', fish: 'Red Snapper', quantity: 160, size: null, netType: 'Trawl Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Skipjack tuna (Katsuwonus pelamis)'] },
+                { location: 'Indian Ocean', fish: 'Grouper', quantity: 120, size: null, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Bigeye tuna (Thunnus obesus)'] },
+                { location: 'Laccadive Sea', fish: 'Mahi Mahi', quantity: 200, size: null, netType: 'Long Line', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Reef grouper (Epinephelus spp.)'] },
+                { location: 'Laccadive Sea', fish: 'Barracuda', quantity: 90, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Parrotfish (Scarus spp.)'] },
+                { location: 'Laccadive Sea', fish: 'Emperor Fish', quantity: 130, size: null, netType: 'Gill Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Butterflyfish (Chaetodon spp.)'] },
+                { location: 'Raichak Lake', fish: 'Tilapia', quantity: 70, size: null, netType: 'Cast Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Catla (Catla catla)'] },
+                { location: 'Raichak Lake', fish: 'Catfish', quantity: 50, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Rohu (Labeo rohita)'] },
+                { location: 'Mangalore Lake', fish: 'Carp', quantity: 80, size: null, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Common carp (Cyprinus carpio)'] },
+                { location: 'Mangalore Lake', fish: 'Snakehead', quantity: 60, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Tilapia (Oreochromis mossambicus)'] },
+                { location: 'Mangalore Lake', fish: 'Tilapia', quantity: 90, size: null, netType: 'Cast Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Catla (Catla catla)'] },
+                { location: 'Andaman Sea', fish: 'Mahi Mahi', quantity: 180, size: null, netType: 'Long Line', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Snapper (Lutjanus argentimaculatus)'] },
+                { location: 'Andaman Sea', fish: 'Tuna', quantity: 220, size: null, netType: 'Drift Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Coral trout (Plectropomus leopardus)'] },
+                { location: 'Andaman Sea', fish: 'Pomfret', quantity: 140, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Trevally (Caranx ignobilis)'] },
+                { location: 'Gulf of Kutch', fish: 'Indian Mackerel', quantity: 130, size: null, netType: 'Gill Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Mudskipper (Periophthalmus spp.)'] },
+                { location: 'Gulf of Kutch', fish: 'Ribbon Fish', quantity: 90, size: null, netType: 'Purse Seine', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Bombay duck (Harpadon nehereus)'] },
+                { location: 'Gulf of Kutch', fish: 'Bombay Duck', quantity: 70, size: null, netType: 'Trawl Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Milkfish (Chanos chanos)'] },
+                { location: 'Gulf of Khambt', fish: 'Catla', quantity: 200, size: null, netType: 'Cast Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Bombay duck (Harpadon nehereus)'] },
+                { location: 'Gulf of Khambt', fish: 'Rohu', quantity: 180, size: null, netType: 'Gill Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Indian prawn (Fenneropenaeus indicus)'] },
+                { location: 'Gulf of Mannar', fish: 'Kingfish', quantity: 100, size: null, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Parrotfish (Scarus ghobban)'] },
+                { location: 'Gulf of Mannar', fish: 'Tuna', quantity: 250, size: null, netType: 'Long Line', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Sea cucumber (Holothuria spp.)'] },
+                { location: 'Gulf of Mannar', fish: 'Pomfret', quantity: 140, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Reef grouper (Epinephelus spp.)'] },
+                { location: 'Palk Strait', fish: 'Sardine', quantity: 150, size: null, netType: 'Purse Seine', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Silver pomfret (Pampus argenteus)'] },
+                { location: 'Palk Strait', fish: 'Indian Anchovy', quantity: 90, size: null, netType: 'Beach Seine', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Sea bass (Lates calcarifer)'] },
+                { location: 'Strait of Malacca', fish: 'Red Snapper', quantity: 160, size: null, netType: 'Trawl Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Barramundi (Lates calcarifer)'] },
+                { location: 'Strait of Malacca', fish: 'Grouper', quantity: 120, size: null, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Indian threadfin (Polynemus indicus)'] },
+                { location: 'Wular Lake', fish: 'Tilapia', quantity: 70, size: null, netType: 'Cast Net', Status: 'Healthy', healthStatus: 'Healthy', alternatives: ['Snow trout (Schizothorax spp.)'] },
+                { location: 'Wular Lake', fish: 'Catfish', quantity: 50, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Common carp (Cyprinus carpio)'] },
+                { location: 'Dal Lake', fish: 'Carp', quantity: 80, size: null, netType: 'Gill Net', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Schizothorax niger (Kashmir snow trout)'] },
+                { location: 'Dal Lake', fish: 'Snakehead', quantity: 60, size: null, netType: 'Hook and Line', Status: 'Declining', healthStatus: 'Healthy', alternatives: ['Common carp (Cyprinus carpio)'] },
+            ];
+            
+            const grid = document.getElementById('data-grid');
+            const searchInput = document.getElementById('searchInput');
+            const modal = document.getElementById('details-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const modalBody = document.getElementById('modal-body');
+
+            const renderCards = (data) => {
+                grid.innerHTML = '';
+                data.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'data-card p-4 flex flex-col justify-between cursor-pointer';
+                    
+                    const statusClass = item.Status.toLowerCase() === 'declining' ? 'status-declining' : 'status-healthy';
+
+                    card.innerHTML = `
+                        <div>
+                            <div class="flex justify-between items-start">
+                                <h3 class="text-lg font-bold text-light-blue font-montserrat">${item.fish}</h3>
+                                <span class="status-tag ${statusClass}">${item.Status}</span>
+                            </div>
+                            <p class="text-sm text-slate mt-1">${item.location}</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-dark-slate">
+                             <p class="text-sm"><strong>Quantity:</strong> ${item.quantity} units</p>
+                             <p class="text-sm"><strong>Net Type:</strong> ${item.netType}</p>
+                        </div>
+                    `;
+                    card.addEventListener('click', () => showDetails(item));
+                    grid.appendChild(card);
+                });
+            };
+
+            const showDetails = (item) => {
+                modalBody.innerHTML = `
+                    <h2 class="text-2xl font-montserrat text-white mb-4">${item.fish} - <span class="text-slate">${item.location}</span></h2>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <p><strong>Quantity Caught:</strong> ${item.quantity} units</p>
+                        <p><strong>Average Size:</strong> ${item.size ? item.size : 'N/A'}</p>
+                        <p><strong>Net Type:</strong> ${item.netType}</p>
+                        <p><strong>Health Status:</strong> ${item.healthStatus}</p>
+                        <p class="col-span-2"><strong>Stock Status:</strong> <span class="font-bold ${item.Status.toLowerCase() === 'declining' ? 'text-red-400' : 'text-green-400'}">${item.Status}</span></p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-dark-slate">
+                        <p class="font-bold mb-2">Suggested Alternatives:</p>
+                        <ul class="list-disc list-inside pl-2 text-slate">
+                           ${item.alternatives.map(alt => `<li>${alt}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                modal.classList.remove('hidden');
+            }
+            
+            const closeModal = () => modal.classList.add('hidden');
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if(e.target === modal) closeModal();
+            });
+
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const filteredData = fishData.filter(item => 
+                    item.fish.toLowerCase().includes(searchTerm) ||
+                    item.location.toLowerCase().includes(searchTerm)
+                );
+                renderCards(filteredData);
+            });
+
+            // --- CHARTS ---
+            const setupCharts = () => {
+                // Chart global defaults
+                Chart.defaults.color = '#8892b0';
+                Chart.defaults.font.family = "'Roboto', sans-serif";
+                
+                // 1. Weight Classification Chart (Pie)
+                const weightCategories = {
+                    'Small (<80)': 0,
+                    'Medium (80-150)': 0,
+                    'Large (>150)': 0,
+                    'Unknown': 0
+                };
+
+                fishData.forEach(d => {
+                    if (d.size === null || d.size === undefined) {
+                        weightCategories['Unknown']++;
+                    } else if (d.size < 80) {
+                        weightCategories['Small (<80)']++;
+                    } else if (d.size < 150) {
+                        weightCategories['Medium (80-150)']++;
+                    } else {
+                        weightCategories['Large (>150)']++;
+                    }
+                });
+
+
+                new Chart(document.getElementById('stockStatusChart'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(weightCategories),
+                        datasets: [{
+                            data: Object.values(weightCategories),
+                            backgroundColor: ['#64ffda', '#a8b2d1', '#ff7373', '#495670'],
+                            borderColor: ['#0a192f'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { position: 'top' } }
+                    }
+                });
+
+                // 2. Catch by Location (Bar)
+                const locationData = fishData.reduce((acc, curr) => {
+                    acc[curr.location] = (acc[curr.location] || 0) + curr.quantity;
+                    return acc;
+                }, {});
+                
+                const sortedLocations = Object.entries(locationData)
+                    .sort(([,a],[,b]) => b-a)
+                    .slice(0, 5);
+
+                new Chart(document.getElementById('catchByLocationChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: sortedLocations.map(l => l[0]),
+                        datasets: [{
+                            label: 'Total Quantity',
+                            data: sortedLocations.map(l => l[1]),
+                            backgroundColor: 'rgba(100, 255, 218, 0.2)',
+                            borderColor: '#64ffda',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        plugins: { legend: { display: false } },
+                        scales: { x: { grid: { color: '#49567020' } }, y: { grid: { color: '#49567020' } } }
+                    }
+                });
+            };
+
+            // Initial render
+            renderCards(fishData);
+            setupCharts();
+        });
+    </script>
+</body>
+</html>
+
+

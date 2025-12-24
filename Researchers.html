@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Underwater World</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #e0f2f7;
+            background: linear-gradient(rgba(5, 15, 35, 0.4), rgba(5, 15, 35, 0.4)), url('Background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            outline: none;
+            z-index: 0;
+        }
+
+        .container {
+            padding: 40px 50px;
+            max-width: 800px;
+            background: rgba(5, 15, 40, 0.65);
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+            animation: fadeIn 1.5s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .header-elements {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .search-input {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+            padding: 10px 20px;
+            color: #e0f2f7;
+            font-size: 1em;
+            outline: none;
+            transition: all 0.4s ease;
+        }
+
+        .search-input::placeholder { color: rgba(224, 242, 247, 0.6); }
+        .search-input:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(135, 206, 235, 0.6);
+        }
+        
+        h1 {
+            font-size: 3.2em;
+            font-weight: 600;
+            color: #87ceeb;
+            text-shadow: 0 0 12px #87ceeb, 0 0 25px rgba(135, 206, 235, 0.7);
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.25em;
+            margin-bottom: 35px;
+            color: #cdeefc;
+        }
+
+        .main-button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .button-group, .button-group1 {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .button {
+            padding: 14px 32px;
+            background: linear-gradient(45deg, #0d47a1, #1565c0);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(13, 71, 161, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(21, 101, 192, 0.6);
+        }
+
+        .button:active {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(21, 101, 192, 0.5);
+        }
+        
+        .special-button {
+            background: linear-gradient(45deg, #20c997, #28a745);
+            box-shadow: 0 5px 20px rgba(40, 167, 69, 0.35);
+        }
+
+        .special-button:hover {
+            box-shadow: 0 12px 30px rgba(40, 167, 69, 0.5);
+        }
+
+        .search-results {
+            margin-top: 30px;
+            width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .result-item {
+            background-color: rgba(13, 71, 161, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px 20px;
+            animation: fadeInResult 0.5s ease-out;
+        }
+
+        .result-item h3 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #87ceeb;
+        }
+
+        .result-item p {
+            font-size: 0.95em;
+            margin-bottom: 0;
+            color: #cdeefc;
+        }
+
+        .no-results {
+            color: #ff8a80;
+            font-style: italic;
+            text-align: center;
+        }
+
+        @keyframes fadeInResult {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .search-results::-webkit-scrollbar { width: 8px; }
+        .search-results::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+        .search-results::-webkit-scrollbar-thumb { background: rgba(21, 101, 192, 0.7); border-radius: 10px; }
+        .search-results::-webkit-scrollbar-thumb:hover { background: rgba(21, 101, 192, 1); }
+
+        @media (max-width: 768px) {
+            .container { padding: 30px; }
+            .header-elements { flex-direction: column; gap: 20px; }
+            .button-group { flex-direction: column; align-items: center;}
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bg"></canvas>
+
+    <div class="container">
+        <div class="header-elements">
+            <form action="#" class="search-container">
+                <input type="search" placeholder="Search the depths..." class="search-input">
+                <button type="submit" class="button search-button">Go</button>
+            </form>
+            <div class="top-right-option">
+                <a href="form.html" class="button">Standardized Form</a>
+            </div>
+        </div>
+
+        <h1>Welcome to the Deep Blue!</h1>
+        <p>Explore the hidden wonders below the surface.</p>
+
+        <div class="main-button-container">
+            <div class="button-group">
+                <a href="beginner.html" class="button">Beginner</a>
+                <a href="Intermediate.html" class="button">Intermediate</a>
+                <a href="expert.html" class="button">Expert</a>
+            </div>
+            <div class="button-group1">
+                <a href="page4.html" class="button special-button">What's New</a>
+            </div>
+        </div>
+        
+        <div id="search-results" class="search-results"></div>
+    </div>
+    
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js" } }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+
+        // --- Search Functionality ---
+        const searchableContent = [
+            { title: 'Coral Reefs', description: 'Complex ecosystems built by colonies of tiny animals found in marine waters that contain few nutrients.' },
+            { title: 'Bioluminescence', description: 'The production and emission of light by a living organism, common in deep-sea creatures.' },
+            { title: 'Great White Shark', description: 'A species of large mackerel shark which can be found in the coastal surface waters of all major oceans.' },
+            { title: 'Jellyfish', description: 'Gelatinous marine animals with a bell-shaped body and trailing tentacles.' },
+            { title: 'Deep Sea Vents', description: 'Fissures on the seafloor from which geothermally heated water issues. They are oases of life.' },
+            { title: 'Whale Migration', description: 'The seasonal movement of whales from their feeding grounds in cold waters to breeding grounds in warmer waters.' }
+        ];
+
+        const searchForm = document.querySelector('.search-container');
+        const searchInput = document.querySelector('.search-input');
+        const resultsContainer = document.querySelector('#search-results');
+
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            
+            if (!searchTerm) {
+                resultsContainer.innerHTML = '';
+                return;
+            }
+
+            const filteredContent = searchableContent.filter(item => 
+                item.title.toLowerCase().includes(searchTerm) || 
+                item.description.toLowerCase().includes(searchTerm)
+            );
+
+            displayResults(filteredContent);
+        });
+
+        function displayResults(results) {
+            resultsContainer.innerHTML = ''; 
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<p class="no-results">No wonders found for that search. Try another term.</p>';
+                return;
+            }
+
+            results.forEach(item => {
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                resultItem.innerHTML = `
+                    <h3>${item.title}</h3>
+                    <p>${item.description}</p>
+                `;
+                resultsContainer.appendChild(resultItem);
+            });
+        }
+
+
+        // --- Three.js 3D Background ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+          canvas: document.querySelector('#bg'),
+          alpha: true
+        });
+
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.position.setZ(30);
+
+        // --- Mouse Tracking for Interaction ---
+        const mouse = new THREE.Vector2();
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        // --- 3D Objects ---
+
+        // 1. Jellyfish
+        const jellyfishGroup = new THREE.Group();
+        const bodyGeometry = new THREE.SphereGeometry(5, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+        const bodyMaterial = new THREE.MeshPhongMaterial({
+            color: 0x3a7ca5,
+            emissive: 0x2c6e80,
+            transparent: true,
+            opacity: 0.6,
+            shininess: 100,
+            side: THREE.DoubleSide
+        });
+        const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+        jellyfishGroup.add(body);
+
+        const tentacleMaterial = new THREE.MeshBasicMaterial({
+            color: 0x2c6e80,
+            transparent: true,
+            opacity: 0.7,
+            blending: THREE.AdditiveBlending
+        });
+        const tentacles = [];
+        for (let i = 0; i < 15; i++) {
+            const tentacleGeometry = new THREE.CylinderGeometry(0.05, 0.05, 10, 8);
+            const tentacle = new THREE.Mesh(tentacleGeometry, tentacleMaterial);
+            const angle = (i / 15) * Math.PI * 2;
+            tentacle.position.set(Math.cos(angle) * 3, -5, Math.sin(angle) * 3);
+            tentacles.push(tentacle);
+            jellyfishGroup.add(tentacle);
+        }
+        scene.add(jellyfishGroup);
+
+        // 2. Floating Particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCnt = 7000;
+        const posArray = new Float32Array(particlesCnt * 3);
+
+        for(let i=0; i < particlesCnt * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 250;
+        }
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.03,
+            color: 0x7a9fb8,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+            opacity: 0.7
+        });
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        // --- Lighting ---
+        const pointLight = new THREE.PointLight(0xffffff, 1.2);
+        pointLight.position.set(10, 10, 15);
+        const ambientLight = new THREE.AmbientLight(0x404040, 2.5);
+        scene.add(pointLight, ambientLight);
+
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+
+            jellyfishGroup.position.y = Math.sin(elapsedTime * 0.4) * 1.5;
+            jellyfishGroup.rotation.y += 0.001;
+            body.scale.set(
+                1 + Math.sin(elapsedTime * 2) * 0.05,
+                1 + Math.cos(elapsedTime * 2) * 0.1,
+                1 + Math.sin(elapsedTime * 2) * 0.05
+            );
+            
+            tentacles.forEach((tentacle, i) => {
+                tentacle.scale.y = 1 + Math.sin(elapsedTime * 1.5 + i) * 0.2;
+            });
+            
+            particlesMesh.position.y = -elapsedTime * 0.2;
+            if(particlesMesh.position.y < -100) particlesMesh.position.y = 100;
+
+            // Mouse Interaction
+            const targetRotationY = mouse.x * 0.2;
+            const targetRotationX = mouse.y * 0.2;
+            jellyfishGroup.rotation.y += (targetRotationY - jellyfishGroup.rotation.y) * 0.02;
+            jellyfishGroup.rotation.x += (targetRotationX - jellyfishGroup.rotation.x) * 0.02;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+    </script>
+</body>
+</html>
+
